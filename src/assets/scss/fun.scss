@@ -1,0 +1,19 @@
+/* stylelint-disable */
+
+/*
+ * @Company: 智联招聘
+ * @Author: xuebin.me
+ * @LastEditors: Leo
+ * @version: 0.0.0
+ * @Description: 函数
+ * @Date: 2019-03-21 18:01:24
+ * @LastEditTime: 2019-03-26 18:19:25
+ */
+
+@charset "UTF-8";
+
+// #region REM
+@function rem($pixels) {
+  @return $pixels / 100px * 1rem;
+}
+// #endregion

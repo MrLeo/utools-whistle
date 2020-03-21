@@ -1,0 +1,93 @@
+/* stylelint-disable */
+
+/*
+ * @Company: 智联招聘
+ * @Author: xuebin.me
+ * @LastEditors: Please set LastEditors
+ * @version: 0.0.0
+ * @Description: 通用样式
+ * @Date: 2019-03-21 18:01:24
+ * @LastEditTime: 2019-09-07 12:33:13
+ */
+
+@charset "UTF-8";
+
+@import 'fun';
+@import 'mixin';
+@import 'variable';
+
+// #region 清除浮动
+// .clear {
+//   clear: both !important;
+//   display: block !important;
+//   float: none !important;
+//   font-size: 0;
+//   height: 0;
+//   line-height: 0;
+//   margin: 0 !important;
+//   overflow: hidden;
+//   padding: 0 !important;
+// }
+
+// .clearfix {
+//   zoom: 1;
+// }
+
+// .clearfix::after {
+//   clear: both;
+//   content: '';
+//   display: block;
+//   height: 0;
+// }
+// #endregion
+
+// #region 循环
+// @for $i from 1 through 10 {
+//   .foo:nth-of-type(#{$i}) {
+//     border-color: hsl($i * 36, 50%, 50%);
+//   }
+// }
+
+// @each $member in a, b, c, d {
+//   .#{$member} {
+//     background-image: url('/image/#{$member}.jpg');
+//   }
+// }
+// #endregion
+
+// #region placeholder
+@mixin input-placeholder {
+  color: rgba(161, 161, 175, 1);
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  @include input-placeholder;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  @include input-placeholder;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  @include input-placeholder;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  @include input-placeholder;
+}
+// #endregion
+
+// #region css图形
+.arrow {
+  @include arrowStyle;
+}
+// #endregion
+
+html,body,.frame {
+  width: 100%;
+  height: 100%;
+}

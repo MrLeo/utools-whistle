@@ -1,0 +1,29 @@
+/* stylelint-disable */
+
+/*
+ * @Company: 智联招聘
+ * @Author: xuebin.me
+ * @LastEditors: pan.changzhi
+ * @version: 0.0.0
+ * @Description: 混合
+ * @Date: 2019-03-21 18:01:24
+ * @LastEditTime: 2019-04-19 17:38:23
+ */
+
+@charset "UTF-8";
+
+@mixin fullpage {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+@mixin arrowStyle {
+  border: 2px solid rgba(255, 255, 255, 1);
+  border-width: 2px 2px 0 0;
+  height: 16px;
+  transform: rotate(45deg);
+  width: 16px;
+}

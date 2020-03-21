@@ -1,0 +1,21 @@
+{
+  "pluginName": "whistle",
+  "version": "0.0.1",
+  "description": "whistle",
+  "author": "Leo",
+  "homepage": "https://xuebin.me",
+  "main": "index.html",
+  "preload": "preload.js",
+  "features": [
+    {
+      "code": "whistle",
+      "explain": "whistle",
+      "cmds": ["w2", "whistle"]
+    },
+    {
+      "code": "qrcode",
+      "explain": "为SS生成whistle二维码",
+      "cmds": ["w2", "qrcode"]
+    }
+  ]
+}
