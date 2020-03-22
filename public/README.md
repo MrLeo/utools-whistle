@@ -1,6 +1,9 @@
 # whistle
 
+> 提供给uTools的Whistle插件，方便操作Whistle规则
+>
 > 项目地址：[utools-whistle](https://github.com/MrLeo/utools-whistle)
+>
 > 关于我：[xuebin.me](https://xuebin.me)
 
 
