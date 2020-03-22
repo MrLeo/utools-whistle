@@ -18,7 +18,7 @@
  * @returns
  */
 export function natural(min = 0, max = 9007199254740992) {
-  return Math.round(Math.random() * (max - min)) + min;
+  return Math.round(Math.random() * (max - min)) + min
 }
 // #endregion
 
@@ -32,7 +32,7 @@ export function natural(min = 0, max = 9007199254740992) {
  * @returns
  */
 export function integer(min = -9007199254740992, max = 9007199254740992) {
-  return Math.round(Math.random() * (max - min)) + min;
+  return Math.round(Math.random() * (max - min)) + min
 }
 // #endregion
 
@@ -48,21 +48,18 @@ export function integer(min = -9007199254740992, max = 9007199254740992) {
  * @returns
  */
 export function float(min, max, dmin = 0, dmax = 17) {
-  let ret = `${this.integer(min, max)}.`;
+  let ret = `${this.integer(min, max)}.`
   for (
     let i = 0,
-      dcount = this.natural(
-        Math.max(Math.min(dmin, 17), 0),
-        Math.max(Math.min(dmax, 17), 0)
-      );
+      dcount = this.natural(Math.max(Math.min(dmin, 17), 0), Math.max(Math.min(dmax, 17), 0));
     i < dcount;
     i++
   ) {
     ret +=
       // 最后一位不能为 0：如果最后一位为 0，会被 JS 引擎忽略掉。
-      i < dcount - 1 ? this.character("number") : this.character("123456789");
+      i < dcount - 1 ? this.character('number') : this.character('123456789')
   }
-  return parseFloat(ret, 10);
+  return parseFloat(ret, 10)
 }
 // #endregion
 
@@ -76,16 +73,16 @@ export function float(min, max, dmin = 0, dmax = 17) {
  */
 export function character(pool) {
   const pools = {
-    lower: "abcdefghijklmnopqrstuvwxyz",
-    upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    number: "0123456789",
-    symbol: "!@#$%^&*()[]"
-  };
-  pools.alpha = pools.lower + pools.upper;
-  pools.undefined = pools.lower + pools.upper + pools.number + pools.symbol;
+    lower: 'abcdefghijklmnopqrstuvwxyz',
+    upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    number: '0123456789',
+    symbol: '!@#$%^&*()[]'
+  }
+  pools.alpha = pools.lower + pools.upper
+  pools.undefined = pools.lower + pools.upper + pools.number + pools.symbol
 
-  const newPool = pools[`${pool}`.toLowerCase()] || pool;
-  return newPool.charAt(this.natural(0, newPool.length - 1));
+  const newPool = pools[`${pool}`.toLowerCase()] || pool
+  return newPool.charAt(this.natural(0, newPool.length - 1))
 }
 // #endregion
 
@@ -101,39 +98,39 @@ export function character(pool) {
  * @returns
  */
 export function string(pool, min, max) {
-  let len;
+  let len
   switch (arguments.length) {
     case 0: // ()
-      len = this.natural(3, 7);
-      break;
+      len = this.natural(3, 7)
+      break
     case 1: // ( length )
-      len = pool;
+      len = pool
       pool = undefined // eslint-disable-line
-      break;
+      break
     case 2:
       // ( pool, length )
       // eslint-disable-next-line
       if (typeof arguments[0] === 'string') {
-        len = min;
+        len = min
       } else {
         // ( min, max )
-        len = this.natural(pool, min);
+        len = this.natural(pool, min)
         pool = undefined // eslint-disable-line
       }
-      break;
+      break
     case 3:
-      len = this.natural(min, max);
-      break;
+      len = this.natural(min, max)
+      break
     default:
-      len = this.natural(3, 7);
+      len = this.natural(3, 7)
   }
 
-  let text = "";
+  let text = ''
   for (let i = 0; i < len; i++) {
-    text += this.character(pool);
+    text += this.character(pool)
   }
 
-  return text;
+  return text
 }
 // #endregion
 
@@ -160,16 +157,16 @@ export function range(start, stop, step) {
   stop = +stop // eslint-disable-line
   step = +step // eslint-disable-line
 
-  const len = Math.max(Math.ceil((stop - start) / step), 0);
-  let idx = 0;
-  const rangeArr = new Array(len);
+  const len = Math.max(Math.ceil((stop - start) / step), 0)
+  let idx = 0
+  const rangeArr = new Array(len)
 
   while (idx < len) {
-    rangeArr[idx++] = start;
+    rangeArr[idx++] = start
     start += step // eslint-disable-line
   }
 
-  return rangeArr;
+  return rangeArr
 }
 // #endregion
 
@@ -181,10 +178,7 @@ export function range(start, stop, step) {
  * @returns
  */
 export function ip() {
-  return `${natural(0, 255)}.${natural(0, 255)}.${natural(0, 255)}.${natural(
-    0,
-    255
-  )}`;
+  return `${natural(0, 255)}.${natural(0, 255)}.${natural(0, 255)}.${natural(0, 255)}`
 }
 // #endregion
 
@@ -198,4 +192,4 @@ export default {
   character,
   string,
   range
-};
+}

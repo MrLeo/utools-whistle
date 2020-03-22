@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import lottie from "lottie-web";
+import lottie from 'lottie-web'
 
 export default {
   props: {
@@ -45,28 +45,28 @@ export default {
   data() {
     return {
       style: {
-        width: this.width ? `${this.width}px` : "100%",
-        height: this.height ? `${this.height}px` : "100%",
-        overflow: "hidden",
-        margin: "0 auto"
+        width: this.width ? `${this.width}px` : '100%',
+        height: this.height ? `${this.height}px` : '100%',
+        overflow: 'hidden',
+        margin: '0 auto'
       }
-    };
+    }
   },
 
   mounted() {
     if (!this.value) {
       const option = {
         container: this.$refs.lavContainer,
-        renderer: "svg",
+        renderer: 'svg',
         loop: this.options.loop !== false,
         autoplay: this.options.autoplay !== false,
         animationData: this.options.animationData
-      };
-      if (this.options.rendererSettings) {
-        option.rendererSettings = this.options.rendererSettings;
       }
-      this.$emit("input", lottie.loadAnimation(option));
+      if (this.options.rendererSettings) {
+        option.rendererSettings = this.options.rendererSettings
+      }
+      this.$emit('input', lottie.loadAnimation(option))
     }
   }
-};
+}
 </script>

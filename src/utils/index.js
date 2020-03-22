@@ -27,43 +27,42 @@ export const compose = (...fns) => (...args) =>
  * @param {*} date2
  */
 export const dateRange = (date1, date2) => {
-  let oldDate = new Date(date1);
-  let newD = new Date(date2);
-  let date = new Date();
-  let nowStr =
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-  let nowDate = new Date(nowStr);
+  let oldDate = new Date(date1)
+  let newD = new Date(date2)
+  let date = new Date()
+  let nowStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+  let nowDate = new Date(nowStr)
   if (oldDate < nowDate && nowDate < newD) {
-    return true;
+    return true
   } else {
-    return false;
+    return false
   }
-};
+}
 
 // #endregion
 
 // #region throwIfMiss
 export const throwIfMiss = paramName => {
-  throw new Error(`参数错误${paramName ? ": " : ""}${paramName}`);
-};
+  throw new Error(`参数错误${paramName ? ': ' : ''}${paramName}`)
+}
 // #endregion
 
 // #region inBrowser - 判断是否是浏览器
 /**
  * inBrowser 通过判断 `window` 对象是否存在即可
  */
-export const inBrowser = typeof window !== "undefined";
+export const inBrowser = typeof window !== 'undefined'
 // #endregion
 
 // #region isIE/isIE9/isEdge/isChrome - 浏览器判断
 // IE浏览器判断
-export const isIE = UA && /msie|trident/.test(UA);
+export const isIE = UA && /msie|trident/.test(UA)
 // IE9
-export const isIE9 = UA && UA.indexOf("msie 9.0") > 0;
+export const isIE9 = UA && UA.indexOf('msie 9.0') > 0
 // Edge
-export const isEdge = UA && UA.indexOf("edge/") > 0;
+export const isEdge = UA && UA.indexOf('edge/') > 0
 // Chrome
-export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge
 // #endregion
 
 // #region 判断是否微信开发者工具
@@ -71,10 +70,10 @@ export function isWechatdevtools() {
   if (inBrowser) {
     // 微信开发者工具
     if (/(wechatdevtools)/i.test(navigator.userAgent)) {
-      return true;
+      return true
     }
   }
-  return false;
+  return false
 }
 // #endregion
 
@@ -82,7 +81,7 @@ export function isWechatdevtools() {
 /**
  * UA: toLowerCase目的是 为了后续的各种环境检测
  */
-export const UA = inBrowser && window.navigator.userAgent.toLowerCase();
+export const UA = inBrowser && window.navigator.userAgent.toLowerCase()
 // #endregion
 
 // #region hasProto
@@ -91,7 +90,7 @@ export const UA = inBrowser && window.navigator.userAgent.toLowerCase();
  * 一个对象的 __proto__ 属性指向了其构造函数的原型
  * 从一个空的对象字面量开始沿着原型链逐级检查。
  */
-export const hasProto = "__proto__" in {};
+export const hasProto = '__proto__' in {}
 // #endregion
 
 // #region isObject
@@ -99,8 +98,7 @@ export const hasProto = "__proto__" in {};
  * isObject: 区分对象和原始值
  * @param {*} obj
  */
-export const isObject = obj =>
-  Object.prototype.toString.call(obj) === "[object Object]";
+export const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
 // #endregion
 
 // #region camelize - 连字符转驼峰
@@ -108,9 +106,7 @@ export const isObject = obj =>
  * camelize: 连字符转驼峰
  * @param {*} str
  */
-export const camelize = cached(str =>
-  str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ""))
-);
+export const camelize = cached(str => str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : '')))
 // #endregion
 
 // #region capitalize - 首字符大写
@@ -118,11 +114,8 @@ export const camelize = cached(str =>
  * capitalize:首字符大写
  * @param {*} str
  */
-export const capitalize = cached(
-  str => str.charAt(0).toUpperCase() + str.slice(1)
-);
-export const firstUpperCase = ([first, ...rest]) =>
-  first.toUpperCase() + rest.join("");
+export const capitalize = cached(str => str.charAt(0).toUpperCase() + str.slice(1))
+export const firstUpperCase = ([first, ...rest]) => first.toUpperCase() + rest.join('')
 // #endregion
 
 // #region hyphenate - 驼峰转连字符
@@ -130,9 +123,7 @@ export const firstUpperCase = ([first, ...rest]) =>
  * hyphenate:驼峰转连字符
  * @param {*} str
  */
-export const hyphenate = cached(str =>
-  str.replace(/\B([A-Z])/g, "-$1").toLowerCase()
-);
+export const hyphenate = cached(str => str.replace(/\B([A-Z])/g, '-$1').toLowerCase())
 // #endregion
 
 // #region checkCookie - 检测是否支持cookie
@@ -144,9 +135,9 @@ export const hyphenate = cached(str =>
 export function checkCookie() {
   if (!navigator.cookieEnabled) {
     alert('您的浏览器不支持cookie将无法登录，请使用其他浏览器') // eslint-disable-line
-    return false;
+    return false
   }
-  return true;
+  return true
 }
 // #endregion
 
@@ -155,11 +146,11 @@ export function checkCookie() {
  * Create a cached version of a pure function.
  */
 export function cached(fn) {
-  const cache = Object.create(null);
+  const cache = Object.create(null)
   return function cachedFn(str) {
-    const hit = cache[str];
-    return hit || (cache[str] = fn(str));
-  };
+    const hit = cache[str]
+    return hit || (cache[str] = fn(str))
+  }
 }
 // #endregion
 
@@ -172,13 +163,13 @@ export function cached(fn) {
  * @returns
  */
 export function once(fn) {
-  let called = false;
+  let called = false
   return function newFn(...args) {
     if (!called) {
-      called = true;
-      fn.apply(this, args);
+      called = true
+      fn.apply(this, args)
     }
-  };
+  }
 }
 // #endregion
 
@@ -190,8 +181,8 @@ export function once(fn) {
  * @returns
  */
 export function isReserved(str) {
-  const c = `${str}`.charCodeAt(0); // charCodeAt() 方法可返回指定位置的字符的 Unicode 编码
-  return c === 0x24 || c === 0x5f;
+  const c = `${str}`.charCodeAt(0) // charCodeAt() 方法可返回指定位置的字符的 Unicode 编码
+  return c === 0x24 || c === 0x5f
 }
 // #endregion
 
@@ -203,19 +194,19 @@ export function isReserved(str) {
  */
 export function fearNotLetter(str) {
   // 将字符串转为ASCII码，并存入数组
-  const arr = [];
+  const arr = []
   for (let i = 0; i < str.length; i++) {
-    arr.push(str.charCodeAt(i));
+    arr.push(str.charCodeAt(i))
   }
   for (let j = 1; j < arr.length; j++) {
-    const num = arr[j] - arr[j - 1];
+    const num = arr[j] - arr[j - 1]
     // 判断后一项减前一项是否为1，若不为1，则缺失该字符的前一项
     if (num !== 1) {
       // 将缺失字符ASCII转为字符并返回
-      return String.fromCharCode(arr[j] - 1);
+      return String.fromCharCode(arr[j] - 1)
     }
   }
-  return undefined;
+  return undefined
 }
 // #endregion
 
@@ -243,41 +234,41 @@ export function toString(val) {
  */
 export function looseEqual(a, b) {
   // 当 a === b 时，返回true
-  if (a === b) return true;
+  if (a === b) return true
   // 否则进入isObject判断
-  const isObjectA = isObject(a);
-  const isObjectB = isObject(b);
+  const isObjectA = isObject(a)
+  const isObjectB = isObject(b)
   // 判断是否都为Object类型
   if (isObjectA && isObjectB) {
     try {
       // 调用 Array.isArray() 方法，再次进行判断
       // isObject 不能区分是真数组还是对象（typeof）
-      const isArrayA = Array.isArray(a);
-      const isArrayB = Array.isArray(b);
+      const isArrayA = Array.isArray(a)
+      const isArrayB = Array.isArray(b)
       // 判断是否都为数组
       if (isArrayA && isArrayB) {
         // 对比a、bs数组的长度
-        return a.length === b.length && a.every((e, i) => looseEqual(e, b[i])); // 调用 looseEqual 进入递归
+        return a.length === b.length && a.every((e, i) => looseEqual(e, b[i])) // 调用 looseEqual 进入递归
       }
       if (!isArrayA && !isArrayB) {
         // 均不为数组，获取a、b对象的key集合
-        const keysA = Object.keys(a);
-        const keysB = Object.keys(b);
+        const keysA = Object.keys(a)
+        const keysB = Object.keys(b)
         // 对比a、b对象的key集合长度
         // 长度相等，则调用 looseEqual 进入递归
         return keysA.length === keysB.length && keysA.every(key => looseEqual(a[key], b[key])) // eslint-disable-line
       }
       // 如果a、b中一个是数组，一个是对象，直接返回 false
       /* istanbul ignore next */
-      return false;
+      return false
     } catch (e) {
       /* istanbul ignore next */
-      return false;
+      return false
     }
   } else if (!isObjectA && !isObjectB) {
-    return String(a) === String(b);
+    return String(a) === String(b)
   } else {
-    return false;
+    return false
   }
 }
 // #endregion
@@ -288,22 +279,22 @@ export function looseEqual(a, b) {
  * @param {*} url 文件地址
  * @param {*} filename 文件名
  */
-export function downloadFile(url = "", filename = "") {
-  if (!url) return;
+export function downloadFile(url = '', filename = '') {
+  if (!url) return
 
   // 创建隐藏的可下载链接
-  const link = document.createElement("a");
-  link.download = filename;
-  link.style.display = "none";
+  const link = document.createElement('a')
+  link.download = filename
+  link.style.display = 'none'
   // link.target = '_blank'
-  link.href = url;
+  link.href = url
 
   // 触发点击
-  document.body.appendChild(link);
-  link.click();
+  document.body.appendChild(link)
+  link.click()
 
   // 然后移除
-  document.body.removeChild(link);
+  document.body.removeChild(link)
 }
 // #endregion
 
@@ -313,22 +304,22 @@ export function downloadFile(url = "", filename = "") {
  * @param {*} blob 文件blob对象
  * @param {*} filename 文件名
  */
-export function downloadFileByBlob(blob = null, filename = "") {
-  if (!blob) return;
+export function downloadFileByBlob(blob = null, filename = '') {
+  if (!blob) return
 
   // 创建隐藏的可下载链接
-  const link = document.createElement("a");
-  link.download = filename;
-  link.style.display = "none";
+  const link = document.createElement('a')
+  link.download = filename
+  link.style.display = 'none'
 
-  link.href = URL.createObjectURL(blob);
+  link.href = URL.createObjectURL(blob)
 
   // 触发点击
-  document.body.appendChild(link);
-  link.click();
+  document.body.appendChild(link)
+  link.click()
 
   // 然后移除
-  document.body.removeChild(link);
+  document.body.removeChild(link)
 }
 // #endregion
 
@@ -339,51 +330,51 @@ export function downloadFileByBlob(blob = null, filename = "") {
  * @param {*} hasCallback
  */
 export function remoteLoad(url, hasCallback) {
-  return createScript(url);
+  return createScript(url)
   /**
    * 创建script
    * @param url
    * @returns {Promise}
    */
   function createScript(url) {
-    var scriptElement = document.createElement("script");
-    document.body.appendChild(scriptElement);
+    var scriptElement = document.createElement('script')
+    document.body.appendChild(scriptElement)
     var promise = new Promise((resolve, reject) => {
       scriptElement.addEventListener(
-        "load",
+        'load',
         e => {
-          removeScript(scriptElement);
+          removeScript(scriptElement)
           if (!hasCallback) {
-            resolve(e);
+            resolve(e)
           }
         },
         false
-      );
+      )
 
       scriptElement.addEventListener(
-        "error",
+        'error',
         e => {
-          removeScript(scriptElement);
-          reject(e);
+          removeScript(scriptElement)
+          reject(e)
         },
         false
-      );
+      )
 
       if (hasCallback) {
         window.____callback____ = function() {
-          resolve();
-          window.____callback____ = null;
-        };
+          resolve()
+          window.____callback____ = null
+        }
       }
-    });
+    })
 
     if (hasCallback) {
-      url += "&callback=____callback____";
+      url += '&callback=____callback____'
     }
 
-    scriptElement.src = url;
+    scriptElement.src = url
 
-    return promise;
+    return promise
   }
 
   /**
@@ -391,7 +382,7 @@ export function remoteLoad(url, hasCallback) {
    * @param scriptElement script dom
    */
   function removeScript(scriptElement) {
-    document.body.removeChild(scriptElement);
+    document.body.removeChild(scriptElement)
   }
 }
 // #endregion
@@ -401,16 +392,14 @@ export function remoteLoad(url, hasCallback) {
  * @param {string} tel
  */
 export function checktel(tel) {
-  return /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(
-    tel
-  );
+  return /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(tel)
 }
 // #endregion
 
 // #region 检测Email
 export function checkEmail(email) {
-  const reg = /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/;
-  return reg.test(email);
+  const reg = /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/
+  return reg.test(email)
 }
 // #endregion
 
@@ -496,16 +485,16 @@ export function addFlatToPrototype() {
 
 // #region 节流
 export function throttle(fn, delay) {
-  let timer;
+  let timer
   return () => {
     if (timer) {
-      return;
+      return
     }
     timer = setTimeout(() => {
-      fn();
-      clearTimeout(timer);
-      timer = null; // 在delay后执行完fn之后清空timer，此时timer为假，throttle触发可以进入计时器
-    }, delay);
-  };
+      fn()
+      clearTimeout(timer)
+      timer = null // 在delay后执行完fn之后清空timer，此时timer为假，throttle触发可以进入计时器
+    }, delay)
+  }
 }
 // #endregion

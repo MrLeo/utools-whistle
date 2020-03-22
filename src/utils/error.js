@@ -24,14 +24,14 @@ class ZPError extends Error {
    */
   constructor({ code, message, taskId }) {
     // Calling parent constrcutor of base Error class.
-    super(message);
+    super(message)
     // Capturing stack trace, excluding constructor call from it.
-    Error.captureStackTrace && Error.captureStackTrace(this, this.constructor);
+    Error.captureStackTrace && Error.captureStackTrace(this, this.constructor)
     // Saving class name in the property of our custom error as a shortcut.
-    this.name = this.constructor.name;
-    this.code = code || 500;
-    this.taskId = taskId || "";
+    this.name = this.constructor.name
+    this.code = code || 500
+    this.taskId = taskId || ''
   }
 }
 
-export default ZPError;
+export default ZPError

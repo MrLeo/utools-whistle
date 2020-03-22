@@ -33,7 +33,7 @@
  **************************************************************
  */
 
-import axios from "axios";
+import axios from 'axios'
 
 // #region Http
 /**
@@ -44,60 +44,56 @@ import axios from "axios";
  */
 export class Http {
   constructor(option = { headers: {} }) {
-    const { headers, options } = option;
+    const { headers, options } = option
     this.config = {
       // baseURL: ENV.api,
       headers: {
-        "Content-Type": "application/json;charset=UTF-8",
+        'Content-Type': 'application/json;charset=UTF-8',
         ...headers
       },
       ...options
-    };
+    }
 
     // 本地开发接口请求使用whistlejs代理配置
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV !== 'production') {
       this.config.proxy = {
-        host: "127.0.0.1",
+        host: '127.0.0.1',
         port: 8899
-      };
+      }
     }
 
     // #region response status: 请求已发出，但是不在2xx的范围
     this.statusCode = {
-      404: "404,错误请求",
-      401: "未授权，请重新登录",
-      403: "禁止访问",
-      408: "请求超时",
-      500: "服务器内部错误",
-      501: "功能未实现",
-      502: "服务不可用",
-      503: "服务不可用",
-      504: "网关错误",
-      510: "服务器内部错误"
-    };
+      404: '404,错误请求',
+      401: '未授权，请重新登录',
+      403: '禁止访问',
+      408: '请求超时',
+      500: '服务器内部错误',
+      501: '功能未实现',
+      502: '服务不可用',
+      503: '服务不可用',
+      504: '网关错误',
+      510: '服务器内部错误'
+    }
     // #endregion
 
-    this.instance = axios.create(this.config);
+    this.instance = axios.create(this.config)
 
-    this.requestUse();
-    this.responseUse();
+    this.requestUse()
+    this.responseUse()
 
-    return this.instance;
+    return this.instance
   }
 
   resHandler(res) {
-    const status =
-      res?.data?.code ||
-      res?.status ||
-      res?.response?.status ||
-      res?.request?.status;
-    const errorInfo = this.statusCode[status];
+    const status = res?.data?.code || res?.status || res?.response?.status || res?.request?.status
+    const errorInfo = this.statusCode[status]
 
     // const url = window.location;
     // const bkurl = encodeURIComponent(url.href);
 
     // ! 如果以下 code 的错误信息不需要提示可在 {@link store/utils/response-handler.js} 中添加忽略
-    const errorHandler = {};
+    const errorHandler = {}
 
     return errorHandler[status]?.() || (errorInfo&&Promise.reject(new Error(errorInfo))) || res?.data || res // eslint-disable-line
   }
@@ -106,14 +102,14 @@ export class Http {
   requestUse() {
     this.instance.interceptors.request.use(
       config => {
-        console.info(`🔊 【请求拦截器】 -> ${config?.url}`, config);
-        return config;
+        console.info(`🔊 【请求拦截器】 -> ${config?.url}`, config)
+        return config
       },
       error => {
-        console.info("🔊 【请求拦截器】 -> error", error);
-        return error;
+        console.info('🔊 【请求拦截器】 -> error', error)
+        return error
       }
-    );
+    )
   }
   // #endregion
 
@@ -121,14 +117,14 @@ export class Http {
   responseUse() {
     this.instance.interceptors.response.use(
       res => {
-        console.info(`🔊 【响应拦截器】 -> ${res?.config?.url}`, res);
-        return this.resHandler(res);
+        console.info(`🔊 【响应拦截器】 -> ${res?.config?.url}`, res)
+        return this.resHandler(res)
       },
       res => {
-        console.info(`🔊 【响应拦截器】 -> error -> ${res?.config?.url}`, res);
-        return this.resHandler(res);
+        console.info(`🔊 【响应拦截器】 -> error -> ${res?.config?.url}`, res)
+        return this.resHandler(res)
       }
-    );
+    )
   }
   // #endregion
 }
@@ -144,11 +140,11 @@ export class Http {
 export class HttpBlob extends Http {
   constructor(
     option = {
-      responseType: "blob"
+      responseType: 'blob'
     }
   ) {
-    super(option);
-    return this.instance;
+    super(option)
+    return this.instance
   }
 }
 // #endregion

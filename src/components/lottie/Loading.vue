@@ -3,17 +3,17 @@
 </template>
 
 <script>
-import lottie from "lottie-web";
+import lottie from 'lottie-web'
 
 export default {
-  name: "Loading",
+  name: 'Loading',
   mounted() {
     lottie.loadAnimation({
       wrapper: this.$refs.loading,
-      animType: "svg",
+      animType: 'svg',
       loop: true,
-      animationData: require("../../assets/animation/hourglass.json")
-    });
+      animationData: require('../../assets/animation/hourglass.json')
+    })
   }
-};
+}
 </script>

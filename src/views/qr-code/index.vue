@@ -10,23 +10,23 @@
 export default {
   data() {
     return {
-      address: "",
-      ss: "",
-      qrcode: ""
-    };
+      address: '',
+      ss: '',
+      qrcode: ''
+    }
   },
   created() {
-    this.init();
+    this.init()
   },
   methods: {
     async init() {
-      const { address, ss, qrcode } = await window.getQrCode();
-      this.address = address;
-      this.ss = ss;
-      this.qrcode = qrcode;
+      const { address, ss, qrcode } = await window.getQrCode()
+      this.address = address
+      this.ss = ss
+      this.qrcode = qrcode
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -8,45 +8,41 @@
  * @LastEditTime: 2019-06-27 14:59:44
  */
 
-import {
-  addFirstUpperCaseToPrototype,
-  addFlatToPrototype
-} from "../../utils/index";
+import { addFirstUpperCaseToPrototype, addFlatToPrototype } from '../../utils/index'
 
 export function mutations(states) {
-  addFirstUpperCaseToPrototype();
-  addFlatToPrototype();
+  addFirstUpperCaseToPrototype()
+  addFlatToPrototype()
 
   return {
     // 单个state赋值
     ...Object.keys(states).reduce(
       (obj, key) => ({
         ...obj,
-        [`set${key.firstUpperCase()}`]: (state, payload) =>
-          (state[key] = payload)
+        [`set${key.firstUpperCase()}`]: (state, payload) => (state[key] = payload)
       }),
       {}
     ),
     // 多个state批量赋值
     setData(state, payload) {
       // state = { ...state, ...payload } // eslint-disable-line
-      Object.assign(state, payload);
+      Object.assign(state, payload)
     },
     // 深度合并赋值
-    setDataDeep: require("../../utils/json-helper").mergeJSON,
+    setDataDeep: require('../../utils/json-helper').mergeJSON,
     // 表格页码改变
     pageChange(state, payload) {
-      const { list, total } = payload;
-      state.total = total;
+      const { list, total } = payload
+      state.total = total
       list.forEach((el, index) => {
-        el.key = index;
-      });
-      state.list.splice(0, state.list.length, ...list);
+        el.key = index
+      })
+      state.list.splice(0, state.list.length, ...list)
     }
-  };
+  }
 }
 
-export default mutations;
+export default mutations
 
 // let types = {
 //   ...(r => {
