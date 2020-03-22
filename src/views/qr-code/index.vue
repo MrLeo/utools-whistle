@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <p style="margin:10px;">{{ address }}</p>
-    <p style="margin:10px;">{{ ss }}</p>
+    <p style="margin:20px;">{{ address }}</p>
+    <p style="margin:20px;">{{ ss }}</p>
     <img :src="qrcode" :alt="ss" />
   </div>
 </template>
