@@ -1,13 +1,3 @@
-/*
- * @Company: 智联招聘
- * @Author: xuebin.me
- * @LastEditors: Leo
- * @version: 0.0.0
- * @Description:
- * @Date: 2019-03-29 17:19:56
- * @LastEditTime: 2019-03-29 17:21:34
- */
-
 // #region 返回一个随机的自然数（大于等于 0 的整数）
 /**
  * 返回一个随机的自然数（大于等于 0 的整数）

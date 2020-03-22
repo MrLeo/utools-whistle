@@ -1,13 +1,3 @@
-/*
- * @Company: 智联招聘
- * @Author: xuebin.me
- * @LastEditors: Leo
- * @version: 0.0.0
- * @Description: mutations 公共操作
- * @Date: 2019-03-20 11:22:27
- * @LastEditTime: 2019-06-27 14:59:44
- */
-
 import { addFirstUpperCaseToPrototype, addFlatToPrototype } from '../../utils/index'
 
 export function mutations(states) {

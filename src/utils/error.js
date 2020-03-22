@@ -1,13 +1,3 @@
-/*
- * @Company: 智联招聘
- * @Author: xuebin.me
- * @Date: 2019-01-03 14:14:41
- * @LastEditors: Leo
- * @LastEditTime: 2019-01-07 13:28:40
- * @version: 0.0.0
- * @Description:
- */
-
 /**
  * ZPError
  * @class ZPError

@@ -1,13 +1,3 @@
-/*
- * @Company: 智联招聘
- * @Author: xuebin.me
- * @LastEditors: Please set LastEditors
- * @version: 0.0.0
- * @Description:
- * @Date: 2019-02-26 13:07:46
- * @LastEditTime: 2019-09-12 13:31:58
- */
-
 // #region compose - 函数式编程
 /* eslint-disable */
 /**

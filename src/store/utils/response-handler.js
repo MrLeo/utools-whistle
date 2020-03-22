@@ -1,13 +1,3 @@
-/*
- * @Company: 智联招聘
- * @Author: xuebin.me
- * @Date: 2019-08-09 14:16:19
- * @LastEditTime: 2019-08-09 14:16:58
- * @LastEditors: Leo
- * @version: 0.0.0
- * @Description:
- */
-
 const throwIfEmpty = paramName => {
   throw new Error(`缺少参数 ${paramName}`)
 }

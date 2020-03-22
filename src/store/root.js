@@ -1,12 +1,3 @@
-/*
- * @Company: 智联招聘
- * @Author: xuebin.me
- * @LastEditors: pan.changzhi
- * @version: 0.0.0
- * @Description: 当前登录用户相关信息
- * @Date: 2019-04-04 20:28:11
- * @LastEditTime: 2019-06-14 11:31:44
- */
 import { mutations } from './utils/mutation-types'
 import { response } from './utils/response-handler'
 import { Http } from '../utils/http'
