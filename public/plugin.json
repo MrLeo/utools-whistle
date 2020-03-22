@@ -7,23 +7,18 @@
   "homepage": "https://xuebin.me",
   "main": "index.html",
   "preload": "preload.js",
-  "pluginSetting":{
-    "single": true,
-    "width": 1080,
-    "height": 600
-  },
   "features": [
     {
       "code": "whistle",
       "explain": "whistle",
       "icon": "whistle.png",
-      "cmds": ["w2", "whistle"]
+      "cmds": ["w2", "w2whistle"]
     },
     {
       "code": "qrcode",
       "explain": "为SS生成whistle二维码",
       "icon": "rocket.png",
-      "cmds": ["w2", "qrcode"]
+      "cmds": ["w2", "w2qrcode"]
     }
   ]
 }
