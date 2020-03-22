@@ -2,6 +2,7 @@
   "pluginName": "whistle",
   "version": "0.0.1",
   "description": "whistle",
+  "logo": "whistle.png",
   "author": "Leo",
   "homepage": "https://xuebin.me",
   "main": "index.html",
@@ -10,11 +11,13 @@
     {
       "code": "whistle",
       "explain": "whistle",
+      "icon": "whistle.png",
       "cmds": ["w2", "whistle"]
     },
     {
       "code": "qrcode",
       "explain": "为SS生成whistle二维码",
+      "icon": "rocket.png",
       "cmds": ["w2", "qrcode"]
     }
   ]
