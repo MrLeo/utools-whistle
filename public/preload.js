@@ -15,9 +15,9 @@ var QRCode = require("qrcode");
 
 window.getQrCode = async function() {
   const address = `${ip.address()}:8899`;
-  // http://MTkyLjE2OC4zMS4xNzc6ODg5OQ#w2
   const ss = `http://${Base64.encode(address).replace(/=+$/, "")}#w2`;
   const qrcode = await QRCode.toDataURL(ss);
+
   return {
     address,
     ss,
