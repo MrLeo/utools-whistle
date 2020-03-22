@@ -18,32 +18,31 @@
       <a-col :span="16">
         <a-card :loading="loading" title="规则管理" class="list">
           <div slot="extra">
-            <a-icon type="sync" :spin="autoRefresh.data || loading" @click="refresh" />
+            <a-icon type="sync" :spin="!!autoRefresh.data || loading" @click="refresh" />
           </div>
 
-          <div class="item">
-            <div class="operation">
+          <a-list class="list" size="small" itemLayout="horizontal" :dataSource="rules">
+            <div slot="header" class="list__header">
               <a-switch
                 checkedChildren="开"
                 unCheckedChildren="关"
                 v-model="defaultEnabled"
                 @change="changeDefault"
               />
+              <div>Default</div>
             </div>
-            <div class="name">Default</div>
-          </div>
 
-          <div class="item" v-for="(item, index) in rules" :key="index">
-            <div class="operation">
+            <a-list-item slot="renderItem" slot-scope="item">
               <a-switch
+                slot="actions"
                 checkedChildren="开"
                 unCheckedChildren="关"
                 v-model="item.selected"
                 @change="changeRule(item)"
               />
-            </div>
-            <div class="name">{{ item.name }}</div>
-          </div>
+              <div>{{ item.name }}</div>
+            </a-list-item>
+          </a-list>
 
           <template slot="actions" class="ant-card-actions">
             <div>
@@ -252,22 +251,12 @@ export default {
     justify-content: center;
   }
   .list {
-    .item {
-      height: 20px;
-      line-height: 20px;
-      margin: 5px 0;
-
-      .operation {
-        float: right;
-        width: 40px;
-      }
-
-      .name {
-        margin-right: 50px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+      padding-right: 8px;
     }
   }
 }
