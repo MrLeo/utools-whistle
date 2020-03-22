@@ -2,6 +2,7 @@
 
 - [whistle](http://wproxy.org/whistle/)
 - [uTools](https://u.tools/docs/developer/config.html)
+- [Whistle chrome 第三方插件](https://gitee.com/thesadboy/whistle-rules-plugin)
 
 # 项目启动
 

@@ -7,6 +7,11 @@
   "homepage": "https://xuebin.me",
   "main": "index.html",
   "preload": "preload.js",
+  "pluginSetting":{
+    "single": true,
+    "width": 1080,
+    "height": 600
+  },
   "features": [
     {
       "code": "whistle",
