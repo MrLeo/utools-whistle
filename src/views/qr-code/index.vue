@@ -1,8 +1,20 @@
 <template>
   <div class="wrapper">
-    <p style="margin:20px;">{{ address }}</p>
-    <p style="margin:20px;">{{ ss }}</p>
-    <img :src="qrcode" :alt="ss" />
+    <a-row :gutter="16">
+      <a-col :span="8">
+        <a-card hoverable>
+          <img slot="cover" :src="qrcode" :alt="ss" />
+
+          <a-card-meta :title="address" :description="ss"> </a-card-meta>
+
+          <template slot="actions" class="ant-card-actions">
+            <router-link to="/whistle"
+              ><a-icon type="ellipsis" key="ellipsis" />&nbsp;查看Whistle控制台</router-link
+            >
+          </template>
+        </a-card>
+      </a-col>
+    </a-row>
   </div>
 </template>
 
@@ -31,9 +43,11 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  .ant-row {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
