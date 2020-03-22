@@ -2,10 +2,16 @@
 
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   lintOnSave: true,
   publicPath: './',
+  configureWebpack: config => {
+    return {
+      plugins: [new CopyWebpackPlugin([{ from: './README.md' }])]
+    }
+  },
   chainWebpack: config => {
     // 设置路径别名
     config.resolve.alias
