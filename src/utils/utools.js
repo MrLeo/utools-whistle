@@ -13,7 +13,8 @@ const FIELD_ID = `主键ID`
  */
 export function dbGet(id = throwIfMiss(FIELD_ID), autoPut = false) {
   const db = window.utools.db.get(id)
-  if (db.error) throw new Error(db.message)
+
+  if (db && db.error) throw new Error(db.message)
 
   if (!db && autoPut) {
     return dbPut({ _id: 'autoRefresh', data: null })
@@ -33,11 +34,11 @@ export function dbPut(data = throwIfMiss(`待存储数据`)) {
   if (!data._id) throwIfMiss(FIELD_ID)
 
   const dbPut = window.utools.db.put(data)
-  if (dbPut.error) throw new Error(dbPut.message)
+  if (dbPut && dbPut.error) throw new Error(dbPut.message)
 
   const db = window.utools.db.get(data._id)
   if (!db) throw new Error('数据保存失败')
-  if (db.error) throw new Error(db.message)
+  if (db && db.error) throw new Error(db.message)
 
   return db
 }
@@ -49,7 +50,7 @@ export function dbPut(data = throwIfMiss(`待存储数据`)) {
  */
 export function dbRemove(id = throwIfMiss(FIELD_ID)) {
   const db = window.utools.db.remove(id)
-  if (db.error) throw new Error(db.message)
+  if (db && db.error) throw new Error(db.message)
 
   return db
 }
@@ -61,7 +62,7 @@ export function dbRemove(id = throwIfMiss(FIELD_ID)) {
  */
 export function dbUpdate(data) {
   const db = window.utools.db.bulkDocs(data)
-  if (db.error) throw new Error(db.message)
+  if (db && db.error) throw new Error(db.message)
 
   return db
 }
