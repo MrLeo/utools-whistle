@@ -2,10 +2,7 @@
 
 > 提供给uTools的Whistle插件，方便操作Whistle规则
 >
-> 项目地址：[utools-whistle](https://github.com/MrLeo/utools-whistle)
->
-> 关于我：[xuebin.me](https://xuebin.me)
-
+> **使用本插件前请先确定已经[安装了Whistle](http://wproxy.org/whistle/install.html)**
 
 ![8omCcQ.png](https://s1.ax1x.com/2020/03/22/8omCcQ.png)
 ![8om3H1.png](https://s1.ax1x.com/2020/03/22/8om3H1.png)
@@ -29,3 +26,6 @@
 
 
 
+> 项目地址：[utools-whistle](https://github.com/MrLeo/utools-whistle)
+>
+> 关于我：[xuebin.me](https://xuebin.me)
