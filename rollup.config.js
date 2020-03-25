@@ -2,15 +2,18 @@
 
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import multi from '@rollup/plugin-multi-entry'
 
-export default {
-  input: './preload/main.js',
-  output: {
-    file: './public/preload.js',
-    format: 'cjs'
-  },
-  watch: {
-    exclude: 'node_modules/**'
-  },
-  plugins: [resolve(), commonjs()]
-}
+module.exports = [
+  {
+    input: './preload/main.js',
+    output: {
+      file: './public/preload.js',
+      format: 'cjs'
+    },
+    watch: {
+      exclude: 'node_modules/**'
+    },
+    plugins: [resolve(), commonjs(), multi()]
+  }
+]

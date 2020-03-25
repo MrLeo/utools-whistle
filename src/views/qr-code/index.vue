@@ -121,26 +121,18 @@ export default {
     }
   },
   mounted() {
-    this.init()
+    this.loading = true
+    this.initWhistle()
   },
   methods: {
-    async init() {
-      try {
-        this.loading = true
-        await this.initWhistle()
-        this.loading = false
-      } catch (err) {
-        console.error(`[LOG]: init -> err`, err)
-        this.$notification['error']({
-          message: 'error in init',
-          description: err.message
-        })
-      }
-    },
     async initWhistle() {
       try {
         const res = await http.get(`${this.url}/cgi-bin/init?_=${new Date().getTime()}`)
+        if (!res?.version) {
+          throw new Error(res)
+        }
 
+        this.loading = true
         this.clientId = res.clientId
         this.lastRowId = res.lastDataId
         // this.rules = res.rules.list
@@ -152,15 +144,11 @@ export default {
 
         if (this.autoRefresh.data) setTimeout(this.initWhistle, 1000)
       } catch (err) {
-        console.error(`[LOG]: initWhistle -> err`, err)
-        this.$notification['error']({
-          message: 'error in initWhistle',
-          description: err.message
-        })
+        console.log(`[LOG]: initWhistle -> err`, err)
       }
     },
     async refresh() {
-      this.init()
+      this.initWhistle()
     },
     async changeRule(item) {
       this.setEnable(item, item.selected)
@@ -179,7 +167,7 @@ export default {
           hide: false,
           changed: false
         })
-        this.init()
+        this.initWhistle()
       } catch (err) {
         console.error(`[LOG]: setEnable -> err`, err)
         this.$notification['error']({
@@ -204,7 +192,7 @@ export default {
           key: 'w-reactkey-1',
           icon: 'checkbox'
         })
-        this.init()
+        this.initWhistle()
       } catch (err) {
         console.error(`[LOG]: changeDefault -> err`, err)
         this.$notification['error']({

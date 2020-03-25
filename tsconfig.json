@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "ES2018",
+    "experimentalDecorators": true,
+    "types": [
+      // utools api
+      "utools-helper/@types/utools",
+      // electron api
+      "utools-helper/@types/electron",
+      "@types/node"
+    ]
+  }
+}

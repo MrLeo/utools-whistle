@@ -55,12 +55,12 @@ export class Http {
     }
 
     // 本地开发接口请求使用whistlejs代理配置
-    if (process.env.NODE_ENV !== 'production') {
-      this.config.proxy = {
-        host: '127.0.0.1',
-        port: 8899
-      }
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //   this.config.proxy = {
+    //     host: '127.0.0.1',
+    //     port: 8899
+    //   }
+    // }
 
     // #region response status: 请求已发出，但是不在2xx的范围
     this.statusCode = {
