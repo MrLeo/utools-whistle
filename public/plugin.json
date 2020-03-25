@@ -6,7 +6,7 @@
   "author": "Leo",
   "homepage": "https://xuebin.me",
   "main": "index.html",
-  "preload": "preload.js",
+  "preload": "preload/main.js",
   "features": [
     {
       "code": "qrcode",

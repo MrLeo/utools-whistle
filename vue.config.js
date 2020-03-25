@@ -10,7 +10,10 @@ module.exports = {
   publicPath: './',
   configureWebpack: config => {
     return {
-      plugins: [new CopyWebpackPlugin([{ from: './README.md' }])]
+      plugins: [
+        new CopyWebpackPlugin([{ from: './README.md' }]),
+        new CopyWebpackPlugin([{ from: './preload/', to: 'preload/' }])
+      ]
     }
   },
   chainWebpack: config => {
