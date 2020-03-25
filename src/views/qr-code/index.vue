@@ -132,7 +132,7 @@ export default {
           throw new Error(res)
         }
 
-        this.loading = true
+        this.loading = false
         this.clientId = res.clientId
         this.lastRowId = res.lastDataId
         // this.rules = res.rules.list
