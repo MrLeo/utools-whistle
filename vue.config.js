@@ -6,6 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   lintOnSave: true,
+  productionSourceMap: false,
   publicPath: './',
   configureWebpack: config => {
     return {
