@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%;">
-    <iframe src="http://local.whistlejs.com/" frameborder="0" class="frame" id="frame"></iframe>
+    <iframe :src="process.env.VUE_APP_WHISTLE_API" frameborder="0" class="frame" id="frame"></iframe>
     <a-affix
       :offsetTop="50"
       :offsetBottom="50"
