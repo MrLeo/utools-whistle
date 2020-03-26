@@ -12,9 +12,9 @@
 
 - [x] 为手机 SS 代理软件生成 Whistle 二维码
 - [x] Whistle 规则开关（参考[Whistle chrome 第三方插件](https://gitee.com/thesadboy/whistle-rules-plugin)）
-- [ ] 检查并初始化 Whistle 环境
-- [ ] 获取 Whistle 状态
-- [ ] 启动/关闭/刷新 Whistle
+- [x] 检查并初始化 Whistle 环境
+- [x] 获取 Whistle 状态
+- [x] 启动/关闭/刷新 Whistle
 
 # 相关链接
 
