@@ -107,7 +107,7 @@ export default {
 
       autoRefresh: false,
       loading: true,
-      whistleRunning: false,
+      whistleRunning: true,
       steps: [
         {
           title: `检查node环境`,
@@ -162,7 +162,12 @@ export default {
     }
   },
   mounted() {
+    this.loading = true
+    this.initWhistle()
     this.init()
+  },
+  beforeDestroy() {
+    this.whistleRunning = false
   },
   methods: {
     async init() {
@@ -170,12 +175,10 @@ export default {
         await this.checkNode()
         await this.checkWhistle()
         await this.checkWhistleStatus()
-
         this.whistleRunning = true
-        this.loading = true
-        await this.initWhistle()
       } catch (err) {
         console.log(`[LOG]: init -> err`, err)
+        this.whistleRunning = false
       }
     },
     async checkNode() {
