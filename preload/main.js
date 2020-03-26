@@ -53,7 +53,6 @@ window.whistleCheck = async function() {
   console.log(`[LOG]: whistleCheck -> result`, result)
 
   if (!result.success) {
-    // await command.exec('npm install -g whistle')
     throw new Error(`检测未安装whistle。https://wproxy.org/whistle/install.html`)
   }
 
@@ -64,7 +63,7 @@ window.whistleCheck = async function() {
 // #region whistleInstall - 安装Whistle
 window.whistleInstall = async function() {
   console.log(`[LOG]: whistleInstall -> 开始安装 whistle`)
-  const result = await command.exec('npm install -g whistle')
+  const result = await command.exec('npm install whistle -g')
   console.log(`[LOG]: whistleInstall -> result`, result)
 
   if (!result.success) {
