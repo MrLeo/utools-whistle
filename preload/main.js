@@ -7,10 +7,11 @@
 // const path = require('path')
 // const electronLocalshortcut = require('electron-localshortcut')
 
-const ip = require('./lib/ip')
-const Base64 = require('./lib/base64').Base64
-const QRCode = require('./lib/qrcode/qrcode')
-const fixPath = require('./lib/fix-path')
+const ip = require('./lib/output/ip')
+const Base64 = require('./lib/output/base64').Base64
+const QRCode = require('./lib/output/qrcode')
+const fixPath = require('./lib/output/fix-path')
+
 const command = require('./command')
 
 fixPath()
