@@ -34,7 +34,7 @@ window.checkNode = async function() {
 
   if (!result.success) {
     throw new Error(
-      '检测到未安装node，请安装node后重启应用。下载地址：https://nodejs.org/en/download/'
+      `检测到未安装node，请安装node后重启应用。下载地址：https://nodejs.org/en/download/`
     )
   }
 }
@@ -62,12 +62,13 @@ window.whistleInstall = async function() {
   console.log(`[LOG]: result`, result)
 
   if (!result.success) {
-    throw new Error('whistle安装失败，请重试。https://wproxy.org/whistle/install.html')
+    throw new Error(`whistle安装失败，请重试。https://wproxy.org/whistle/install.html`)
   }
 }
 
 /**
  * 操作whistle
+ * @param {String} cmd [status|start|stop|restart]
  */
 window.whistleControl = async function(cmd) {
   console.log(`[LOG]: whistleControl -> w2 ${cmd}`)
