@@ -1,6 +1,22 @@
 <template>
   <div class="wrapper">
     <a-row :gutter="16">
+      <a-col :span="24">
+        <a-steps size="small">
+          <a-step
+            v-for="(step, index) in steps"
+            :key="index"
+            :title="step.title"
+            :subTitle="step.subTitle"
+            :description="step.desc"
+            :status="step.status"
+          >
+            <a-icon v-if="step.loading" type="loading" slot="icon" />
+          </a-step>
+        </a-steps>
+      </a-col>
+    </a-row>
+    <a-row :gutter="16">
       <a-col :span="8">
         <a-card hoverable>
           <img slot="cover" :src="qrcode" :alt="ss" />
@@ -16,7 +32,7 @@
       </a-col>
 
       <a-col :span="16">
-        <a-card :loading="loading" title="规则管理" class="list">
+        <a-card :loading="!whistleRunning || loading" title="规则管理" class="list">
           <div slot="extra">
             <a-icon type="sync" :spin="!!autoRefresh.data || loading" @click="refresh" />
           </div>
@@ -64,6 +80,7 @@
 <script>
 import { Http } from '../../utils/http'
 import { dbPut, dbGet } from '../../utils/utools'
+import { Button } from 'ant-design-vue'
 
 const http = new Http()
 const DB_ID_FIELD_NAME = 'autoRefresh'
@@ -89,7 +106,31 @@ export default {
       rules: [],
 
       autoRefresh: false,
-      loading: true
+      loading: true,
+      whistleRunning: false,
+      steps: [
+        {
+          title: `检查node环境`,
+          subTitle: '',
+          desc: '',
+          status: 'process',
+          loading: true
+        },
+        {
+          title: `检查Whistle环境`,
+          subTitle: '',
+          desc: '',
+          status: 'wait',
+          loading: false
+        },
+        {
+          title: `检查Whistle运行状态`,
+          subTitle: '',
+          desc: '',
+          status: 'wait',
+          loading: false
+        }
+      ]
     }
   },
   computed: {
@@ -121,12 +162,146 @@ export default {
     }
   },
   mounted() {
-    this.loading = true
-    this.initWhistle()
+    this.init()
   },
   methods: {
+    async init() {
+      try {
+        await this.checkNode()
+        await this.checkWhistle()
+        await this.checkWhistleStatus()
+
+        this.whistleRunning = true
+        this.loading = true
+        await this.initWhistle()
+      } catch (err) {
+        console.log(`[LOG]: init -> err`, err)
+      }
+    },
+    async checkNode() {
+      try {
+        this.steps[0].status = 'process'
+        this.steps[0].loading = true
+        this.steps[0].desc = ''
+
+        await window.checkNode()
+
+        this.steps[0].status = 'finish'
+      } catch (err) {
+        this.steps[0].desc = this.$createElement('div', {}, [err.message])
+        this.steps[0].status = 'error'
+        throw new Error(err.message)
+      } finally {
+        this.steps[0].loading = false
+      }
+    },
+    async checkWhistle() {
+      try {
+        this.steps[1].status = 'process'
+        this.steps[1].loading = true
+        this.steps[1].desc = ''
+
+        await window.whistleCheck()
+
+        this.steps[1].status = 'finish'
+      } catch (err) {
+        this.steps[1].desc = this.$createElement('div', {}, [
+          err.message,
+          this.$createElement(
+            Button,
+            {
+              props: { size: 'small', type: 'primary' },
+              on: {
+                click: () => {
+                  this.installWhistle()
+                }
+              }
+            },
+            ['立即安装']
+          )
+        ])
+        this.steps[1].status = 'error'
+        throw new Error(err.message)
+      } finally {
+        this.steps[1].loading = false
+      }
+    },
+    async installWhistle() {
+      try {
+        this.steps[1].status = 'process'
+        this.steps[1].loading = true
+        this.steps[1].desc = ''
+
+        await window.whistleInstall()
+        await window.whistleCheck()
+
+        this.steps[1].status = 'finish'
+      } catch (err) {
+        this.steps[1].desc = this.$createElement('div', {}, [err.message])
+        this.steps[1].status = 'error'
+        throw new Error(err.message)
+      } finally {
+        this.steps[1].loading = false
+      }
+    },
+    async checkWhistleStatus(cmd = 'status') {
+      try {
+        this.steps[2].status = 'process'
+        this.steps[2].loading = true
+        this.steps[2].desc = ''
+
+        const { data } = await window.whistleControl(cmd)
+
+        if (/(No running)|(whistle killed)/gi.test(data)) {
+          this.steps[2].status = 'error'
+          this.steps[2].desc = this.$createElement('div', {}, [
+            data,
+            this.$createElement(
+              Button,
+              {
+                props: { size: 'small', type: 'primary' },
+                on: { click: () => this.checkWhistleStatus('start') }
+              },
+              ['启动']
+            )
+          ])
+          this.whistleRunning = false
+        } else if (/(is running)|(local\.whistlejs\.com)/gi.test(data)) {
+          this.steps[2].status = 'finish'
+          this.steps[2].desc = this.$createElement('div', {}, [
+            this.$createElement(
+              Button,
+              {
+                props: { size: 'small', type: 'primary' },
+                on: { click: () => this.checkWhistleStatus('restart') }
+              },
+              ['重启']
+            ),
+            this.$createElement(
+              Button,
+              {
+                style: { marginLeft: '10px' },
+                props: { size: 'small', type: 'danger' },
+                on: { click: () => this.checkWhistleStatus('stop') }
+              },
+              ['停止']
+            )
+          ])
+          this.whistleRunning = true
+        }
+      } catch (err) {
+        this.steps[2].desc = this.$createElement('div', {}, [err.message])
+        this.steps[2].status = 'error'
+        throw new Error(err.message)
+      } finally {
+        this.steps[2].loading = false
+      }
+    },
+
     async initWhistle() {
       try {
+        if (!this.whistleRunning) return
+
         const res = await http.get(`${this.url}/cgi-bin/init?_=${new Date().getTime()}`)
         if (!res?.version) {
           throw new Error(res)
@@ -221,10 +396,6 @@ export default {
         this.qrcode = qrcode
       } catch (err) {
         console.error(`[LOG]: getQrCode -> err`, err)
-        this.$notification['error']({
-          message: 'error in getQrCode',
-          description: err.message
-        })
       }
     }
   }

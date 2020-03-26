@@ -12,7 +12,8 @@ import {
   Button,
   Affix,
   Switch,
-  List
+  List,
+  Steps
 } from 'ant-design-vue'
 
 Vue.component(Row.name, Row)
@@ -25,6 +26,8 @@ Vue.component(Affix.name, Affix)
 Vue.component(Switch.name, Switch)
 Vue.component(List.name, List)
 Vue.component(List.Item.name, List.Item)
+Vue.component(Steps.name, Steps)
+Vue.component(Steps.Step.name, Steps.Step)
 
 Vue.prototype.$notification = notification
 Vue.prototype.$message = message
