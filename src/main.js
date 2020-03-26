@@ -13,7 +13,8 @@ import {
   Affix,
   Switch,
   List,
-  Steps
+  Steps,
+  Tooltip
 } from 'ant-design-vue'
 
 Vue.component(Row.name, Row)
@@ -28,6 +29,7 @@ Vue.component(List.name, List)
 Vue.component(List.Item.name, List.Item)
 Vue.component(Steps.name, Steps)
 Vue.component(Steps.Step.name, Steps.Step)
+Vue.component(Tooltip.name, Tooltip)
 
 Vue.prototype.$notification = notification
 Vue.prototype.$message = message

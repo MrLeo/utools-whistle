@@ -3,7 +3,7 @@
 // 可以在此文件内调用uTools 、nodejs、electron提供的api
 // 开发者可以暴露自定义API供后加载脚本使用
 
-// const { app, BrowserWindow, shell, clipboard } = require('electron')
+const { app, BrowserWindow, shell, clipboard } = require('electron')
 // const path = require('path')
 // const electronLocalshortcut = require('electron-localshortcut')
 
@@ -93,5 +93,14 @@ window.whistleControl = async function(cmd) {
   }
 
   return result
+}
+// #endregion
+
+// #region setClipboard - 设置剪贴板
+window.setClipboard = function(text) {
+  clipboard.writeText(text)
+  const res = clipboard.readText()
+  console.log(`[LOG]: setClipboard -> res`, res)
+  return res
 }
 // #endregion

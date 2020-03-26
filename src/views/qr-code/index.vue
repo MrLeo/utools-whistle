@@ -21,7 +21,14 @@
         <a-card hoverable>
           <img slot="cover" :src="qrcode" :alt="ss" />
 
-          <a-card-meta :title="address" :description="ss"> </a-card-meta>
+          <a-card-meta class="card-meta">
+            <a-tooltip slot="title" title="点击复制IP" placement="right">
+              <div class="card-meta__text" @click="setClipboard(address)">{{ address }}</div>
+            </a-tooltip>
+            <a-tooltip slot="description" title="点击复制SS地址" placement="right">
+              <div class="card-meta__text" @click="setClipboard(ss)">{{ ss }}</div>
+            </a-tooltip>
+          </a-card-meta>
 
           <template slot="actions" class="ant-card-actions">
             <router-link to="/whistle"
@@ -400,6 +407,14 @@ export default {
       } catch (err) {
         console.error(`[LOG]: getQrCode -> err`, err)
       }
+    },
+    setClipboard(text) {
+      try {
+        window.setClipboard(text)
+        this.$message.success(`复制成功:${text}`)
+      } catch (err) {
+        console.log(`[LOG]: setClipboard -> err`, err)
+      }
     }
   }
 }
@@ -420,6 +435,20 @@ export default {
       flex-direction: row-reverse;
       padding-right: 8px;
     }
+  }
+}
+</style>
+<style lang="scss">
+.card-meta {
+  .ant-card-meta-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__text {
+    white-space: pre-wrap;
+    word-break: break-all;
+    text-align: center;
   }
 }
 </style>
