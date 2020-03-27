@@ -301,6 +301,7 @@ export default {
             )
           ])
           this.whistleRunning = true
+          this.initWhistle()
         }
       } catch (err) {
         this.steps[2].desc = this.$createElement('div', {}, [err.message])
@@ -445,6 +446,9 @@ export default {
 }
 </style>
 <style lang="scss">
+.ant-steps {
+  min-height: 50px;
+}
 .card-meta {
   .ant-card-meta-detail {
     display: flex;
