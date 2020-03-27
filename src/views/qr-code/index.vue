@@ -31,9 +31,12 @@
           </a-card-meta>
 
           <template slot="actions" class="ant-card-actions">
-            <router-link to="/whistle"
+            <!-- <router-link to="/whistle"
               ><a-icon type="ellipsis" key="ellipsis" />&nbsp;查看Whistle控制台</router-link
-            >
+            > -->
+            <div @click="openWhistle">
+              <a-icon type="ellipsis" key="ellipsis" />&nbsp;查看Whistle控制台
+            </div>
           </template>
         </a-card>
       </a-col>
@@ -415,6 +418,9 @@ export default {
       } catch (err) {
         console.log(`[LOG]: setClipboard -> err`, err)
       }
+    },
+    openWhistle() {
+      window.webview(process.env.VUE_APP_WHISTLE_API)
     }
   }
 }

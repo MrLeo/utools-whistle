@@ -3,7 +3,8 @@
 // 可以在此文件内调用uTools 、nodejs、electron提供的api
 // 开发者可以暴露自定义API供后加载脚本使用
 
-const { app, BrowserWindow, shell, clipboard } = require('electron')
+const { clipboard } = require('electron')
+const { dialog, BrowserWindow, nativeImage } = require('electron').remote
 // const path = require('path')
 // const electronLocalshortcut = require('electron-localshortcut')
 
@@ -102,5 +103,16 @@ window.setClipboard = function(text) {
   const res = clipboard.readText()
   console.log(`[LOG]: setClipboard -> res`, res)
   return res
+}
+// #endregion
+
+// #region webview - 内嵌web页面
+window.webview = function(url) {
+  let window = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: { webSecurity: false }
+  })
+  window.loadURL(url)
 }
 // #endregion

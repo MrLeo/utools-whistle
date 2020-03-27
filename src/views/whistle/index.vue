@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%;height:100%;">
-    <iframe :src="url" frameborder="0" class="frame" id="frame"></iframe>
+    <iframe :src="url" frameborder="0" class="frame" id="frame" sandbox="allow-scripts"></iframe>
     <!-- <div id="container" class="main"></div> -->
     <a-affix
       :offsetTop="50"

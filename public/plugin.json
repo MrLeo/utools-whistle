@@ -10,15 +10,9 @@
   "features": [
     {
       "code": "qrcode",
-      "explain": "为SS生成whistle二维码",
+      "explain": "whistle快捷操作",
       "icon": "rocket.png",
-      "cmds": ["w2", "w2qrcode"]
-    },
-    {
-      "code": "whistle",
-      "explain": "whistle",
-      "icon": "whistle.png",
-      "cmds": ["w2", "w2whistle"]
+      "cmds": ["w2", "whistle"]
     }
   ]
 }
