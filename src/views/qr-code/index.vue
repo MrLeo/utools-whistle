@@ -94,7 +94,7 @@ import { Button } from 'ant-design-vue'
 
 const http = new Http()
 const DB_ID_FIELD_NAME = 'autoRefresh'
-const DELAY = 100
+const DELAY = 500
 
 export default {
   data() {

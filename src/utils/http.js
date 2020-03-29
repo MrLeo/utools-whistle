@@ -102,11 +102,11 @@ export class Http {
   requestUse() {
     this.instance.interceptors.request.use(
       config => {
-        console.info(`🔊 【请求拦截器】 -> ${config?.url}`, config)
+        // console.info(`🔊 【请求拦截器】 -> ${config?.url}`, config)
         return config
       },
       error => {
-        console.info('🔊 【请求拦截器】 -> error', error)
+        // console.info('🔊 【请求拦截器】 -> error', error)
         return error
       }
     )
@@ -117,11 +117,11 @@ export class Http {
   responseUse() {
     this.instance.interceptors.response.use(
       res => {
-        console.info(`🔊 【响应拦截器】 -> ${res?.config?.url}`, res)
+        // console.info(`🔊 【响应拦截器】 -> ${res?.config?.url}`, res)
         return this.resHandler(res)
       },
       res => {
-        console.info(`🔊 【响应拦截器】 -> error -> ${res?.config?.url}`, res)
+        // console.info(`🔊 【响应拦截器】 -> error -> ${res?.config?.url}`, res)
         return this.resHandler(res)
       }
     )
