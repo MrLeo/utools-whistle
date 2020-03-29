@@ -294,7 +294,7 @@ export default {
                 on: {
                   click: async () => {
                     await this.checkWhistleStatus('restart')
-                    await this.getWhistleData()
+                    await this.autoReloadWhistleRules()
                   }
                 }
               },
@@ -363,46 +363,51 @@ export default {
         this.defaultRules = res.rules.defaultRules
         this.server = res.server
 
-        setTimeout(this.getWhistleData, 1000)
+        setTimeout(this.autoReloadWhistleRules, 1000)
       } catch (err) {
         console.log(`[LOG]: initWhistle -> err`, err)
       }
     },
-    async getWhistleData() {
+    async autoReloadWhistleRules() {
       try {
+        if (!this.whistleRunning) return
+
+        const res = await this.getWhistleRules()
+
         if (!this.autoRefresh.data) return
-
-        const res = await http.get(`${this.url}/cgi-bin/get-data`, {
-          params: {
-            clientId: this.clientId,
-            startLogTime: -2,
-            startSvrLogTime: -2,
-            ids: '',
-            startTime: this.lastRowId,
-            dumpCount: 0,
-            lastRowId: this.lastRowId,
-            logId: '',
-            count: 20,
-            _: new Date().getTime()
-          }
-        })
-
-        this.defaultEnabled = !res.defaultRulesIsDisabled
-        this.rules.forEach(rule => (rule.selected = res.list.includes(rule.name)))
-
         setTimeout(() => {
           if (this.mrulesClientId === res.mrulesClientId && this.mrulesTime === res.mrulesTime) {
-            this.getWhistleData()
+            this.autoReloadWhistleRules()
           } else {
             this.initWhistle()
           }
         }, 1000)
       } catch (err) {
-        console.log(`[LOG]: getWhistleData -> err`, err)
-        setTimeout(this.getWhistleData, 1000)
+        console.log(`[LOG]: autoReloadWhistleRules -> err`, err)
+        setTimeout(this.autoReloadWhistleRules, 1000)
       }
     },
+    async getWhistleRules() {
+      const res = await http.get(`${this.url}/cgi-bin/get-data`, {
+        params: {
+          clientId: this.clientId,
+          startLogTime: -2,
+          startSvrLogTime: -2,
+          ids: '',
+          startTime: this.lastRowId,
+          dumpCount: 0,
+          lastRowId: this.lastRowId,
+          logId: '',
+          count: 20,
+          _: new Date().getTime()
+        }
+      })
 
+      this.defaultEnabled = !res.defaultRulesIsDisabled
+      this.rules.forEach(rule => (rule.selected = res.list.includes(rule.name)))
+
+      return res
+    },
     async changeRule(item) {
       try {
         let url = !item.selected
@@ -419,6 +424,8 @@ export default {
           hide: false,
           changed: false
         })
+
+        await this.getWhistleRules()
       } catch (err) {
         console.error(`[LOG]: changeRule -> err`, err)
         this.$notification['error']({
@@ -443,6 +450,8 @@ export default {
           key: 'w-reactkey-1',
           icon: 'checkbox'
         })
+
+        await this.getWhistleRules()
       } catch (err) {
         console.error(`[LOG]: changeDefault -> err`, err)
         this.$notification['error']({
