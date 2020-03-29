@@ -52,7 +52,7 @@
               <a-switch
                 checkedChildren="开"
                 unCheckedChildren="关"
-                v-model="defaultEnabled"
+                :checked="defaultEnabled"
                 @change="changeDefault"
               />
               <div>Default</div>
@@ -63,7 +63,7 @@
                 slot="actions"
                 checkedChildren="开"
                 unCheckedChildren="关"
-                v-model="item.selected"
+                :checked="item.selected"
                 @change="changeRule(item)"
               />
               <div>{{ item.name }}</div>
@@ -370,6 +370,8 @@ export default {
     },
     async getWhistleData() {
       try {
+        if (!this.autoRefresh.data) return
+
         const res = await http.get(`${this.url}/cgi-bin/get-data`, {
           params: {
             clientId: this.clientId,
@@ -385,17 +387,16 @@ export default {
           }
         })
 
-        if (this.mrulesClientId !== res.mrulesClientId || this.mrulesTime !== res.mrulesTime) {
-          this.initWhistle()
-          return
-        }
-
         this.defaultEnabled = !res.defaultRulesIsDisabled
-        this.rules.forEach(rule => {
-          rule.selected = res.list.includes(rule.name)
-        })
+        this.rules.forEach(rule => (rule.selected = res.list.includes(rule.name)))
 
-        if (this.autoRefresh.data) setTimeout(this.getWhistleData, 1000)
+        setTimeout(() => {
+          if (this.mrulesClientId === res.mrulesClientId && this.mrulesTime === res.mrulesTime) {
+            this.getWhistleData()
+          } else {
+            this.initWhistle()
+          }
+        }, 1000)
       } catch (err) {
         console.log(`[LOG]: getWhistleData -> err`, err)
         setTimeout(this.getWhistleData, 1000)
@@ -403,27 +404,25 @@ export default {
     },
 
     async changeRule(item) {
-      this.setEnable(item, item.selected)
-    },
-    async setEnable(item, enable) {
       try {
-        let url = enable ? `${this.url}/cgi-bin/rules/select` : `${this.url}/cgi-bin/rules/unselect`
+        let url = !item.selected
+          ? `${this.url}/cgi-bin/rules/select`
+          : `${this.url}/cgi-bin/rules/unselect`
         await http.post(url, {
           clientId: this.clientId,
           name: item.name,
           value: item.data,
-          selected: true,
+          selected: item.selected,
           active: true,
           key: `w-reactkey-${item.index + 2}`,
           icon: 'checkbox',
           hide: false,
           changed: false
         })
-        this.initWhistle()
       } catch (err) {
-        console.error(`[LOG]: setEnable -> err`, err)
+        console.error(`[LOG]: changeRule -> err`, err)
         this.$notification['error']({
-          message: 'error in setEnable',
+          message: 'error in changeRule',
           description: err.message
         })
       }
@@ -438,13 +437,12 @@ export default {
           name: 'Default',
           fixed: true,
           value: this.defaultRules,
-          selected: true,
+          selected: !value,
           isDefault: true,
           active: true,
           key: 'w-reactkey-1',
           icon: 'checkbox'
         })
-        this.initWhistle()
       } catch (err) {
         console.error(`[LOG]: changeDefault -> err`, err)
         this.$notification['error']({
