@@ -164,7 +164,7 @@ export default {
   created() {
     try {
       this.getQrCode()
-      this.autoRefresh = dbGet(DB_ID_FIELD_NAME, true)
+      this.autoRefresh = dbGet(DB_ID_FIELD_NAME, true, true)
     } catch (err) {
       console.error(`[LOG]: created -> err`, err)
       this.$notification['error']({
@@ -375,11 +375,12 @@ export default {
         const res = await this.getWhistleRules()
 
         if (!this.autoRefresh.data) return
-        setTimeout(() => {
+
+        setTimeout(async () => {
           if (this.mrulesClientId === res.mrulesClientId && this.mrulesTime === res.mrulesTime) {
-            this.autoReloadWhistleRules()
+            await this.autoReloadWhistleRules()
           } else {
-            this.initWhistle()
+            await this.initWhistle()
           }
         }, 1000)
       } catch (err) {
@@ -408,6 +409,12 @@ export default {
 
       return res
     },
+    async manuallyModifyRules() {
+      const res = await this.getWhistleRules()
+      if (this.mrulesClientId !== res.mrulesClientId || this.mrulesTime !== res.mrulesTime) {
+        await this.initWhistle()
+      }
+    },
     async changeRule(item) {
       try {
         let url = !item.selected
@@ -425,7 +432,7 @@ export default {
           changed: false
         })
 
-        await this.getWhistleRules()
+        await this.manuallyModifyRules()
       } catch (err) {
         console.error(`[LOG]: changeRule -> err`, err)
         this.$notification['error']({
@@ -451,7 +458,7 @@ export default {
           icon: 'checkbox'
         })
 
-        await this.getWhistleRules()
+        await this.manuallyModifyRules()
       } catch (err) {
         console.error(`[LOG]: changeDefault -> err`, err)
         this.$notification['error']({

@@ -11,13 +11,13 @@ const FIELD_ID = `主键ID`
  * 执行该方法将会根据文档ID获取数据
  * @param {String} id 主键
  */
-export function dbGet(id = throwIfMiss(FIELD_ID), autoPut = false) {
+export function dbGet(id = throwIfMiss(FIELD_ID), autoPut = false, defaultDb = null) {
   const db = window.utools.db.get(id)
 
   if (db && db.error) throw new Error(db.message)
 
   if (!db && autoPut) {
-    return dbPut({ _id: 'autoRefresh', data: null })
+    return dbPut({ _id: 'autoRefresh', data: defaultDb })
   }
 
   return db
