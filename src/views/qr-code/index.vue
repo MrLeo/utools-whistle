@@ -102,9 +102,11 @@ export default {
       ss: '',
       qrcode: '',
 
-      activeNames: ['1', '2'],
       apiUrl: process.env.VUE_APP_WHISTLE_API,
-      // autoRefresh: $storage.get('auto-refresh') === 'true',
+      version: '',
+      latestVersion: '',
+      mrulesClientId: '',
+      mrulesTime: '',
       server: {},
       proxyEnabled: false,
       defaultEnabled: false,
@@ -150,10 +152,10 @@ export default {
   },
   watch: {
     autoRefresh: {
-      deep: true,
       immediate: true,
       handler(val) {
         if (val.data) {
+          this.loading = true
           this.initWhistle()
         }
       }
@@ -172,8 +174,6 @@ export default {
     }
   },
   mounted() {
-    this.loading = true
-    this.initWhistle()
     this.init()
   },
   beforeDestroy() {
@@ -273,7 +273,12 @@ export default {
               Button,
               {
                 props: { size: 'small', type: 'primary' },
-                on: { click: () => this.checkWhistleStatus('start') }
+                on: {
+                  click: async () => {
+                    await this.checkWhistleStatus('start')
+                    await this.initWhistle()
+                  }
+                }
               },
               ['启动']
             )
@@ -286,7 +291,12 @@ export default {
               Button,
               {
                 props: { size: 'small', type: 'primary' },
-                on: { click: () => this.checkWhistleStatus('restart') }
+                on: {
+                  click: async () => {
+                    await this.checkWhistleStatus('restart')
+                    await this.getWhistleData()
+                  }
+                }
               },
               ['重启']
             ),
@@ -295,13 +305,16 @@ export default {
               {
                 style: { marginLeft: '10px' },
                 props: { size: 'small', type: 'danger' },
-                on: { click: () => this.checkWhistleStatus('stop') }
+                on: {
+                  click: async () => {
+                    await this.checkWhistleStatus('stop')
+                  }
+                }
               },
               ['停止']
             )
           ])
           this.whistleRunning = true
-          this.initWhistle()
         }
       } catch (err) {
         this.steps[2].desc = this.$createElement('div', {}, [err.message])
@@ -309,6 +322,22 @@ export default {
         throw new Error(err.message)
       } finally {
         this.steps[2].loading = false
+      }
+    },
+
+    async refresh() {
+      this.initWhistle()
+    },
+    changeAutoRefresh(val) {
+      try {
+        this.autoRefresh.data = ~~val
+        this.autoRefresh = dbPut({ ...this.autoRefresh })
+      } catch (err) {
+        console.error(`[LOG]: autoRefresh -> err`, err)
+        this.$notification['error']({
+          message: 'error in changeAutoRefresh',
+          description: err.message
+        })
       }
     },
 
@@ -322,23 +351,57 @@ export default {
         }
 
         this.loading = false
+        this.version = res.version
+        this.latestVersion = res.latestVersion
         this.clientId = res.clientId
         this.lastRowId = res.lastDataId
-        // this.rules = res.rules.list
+        this.mrulesClientId = res.mrulesClientId
+        this.mrulesTime = res.mrulesTime
         this.rules.splice(0, this.rules.length, ...res.rules.list)
         this.defaultEnabled = !res.rules.defaultRulesIsDisabled
         this.allowMultipleChoice = res.rules.allowMultipleChoice
         this.defaultRules = res.rules.defaultRules
         this.server = res.server
 
-        if (this.autoRefresh.data) setTimeout(this.initWhistle, 1000)
+        setTimeout(this.getWhistleData, 1000)
       } catch (err) {
         console.log(`[LOG]: initWhistle -> err`, err)
       }
     },
-    async refresh() {
-      this.initWhistle()
+    async getWhistleData() {
+      try {
+        const res = await http.get(`${this.url}/cgi-bin/get-data`, {
+          params: {
+            clientId: this.clientId,
+            startLogTime: -2,
+            startSvrLogTime: -2,
+            ids: '',
+            startTime: this.lastRowId,
+            dumpCount: 0,
+            lastRowId: this.lastRowId,
+            logId: '',
+            count: 20,
+            _: new Date().getTime()
+          }
+        })
+
+        if (this.mrulesClientId !== res.mrulesClientId || this.mrulesTime !== res.mrulesTime) {
+          this.initWhistle()
+          return
+        }
+
+        this.defaultEnabled = !res.defaultRulesIsDisabled
+        this.rules.forEach(rule => {
+          rule.selected = res.list.includes(rule.name)
+        })
+
+        if (this.autoRefresh.data) setTimeout(this.getWhistleData, 1000)
+      } catch (err) {
+        console.log(`[LOG]: getWhistleData -> err`, err)
+        setTimeout(this.getWhistleData, 1000)
+      }
     },
+
     async changeRule(item) {
       this.setEnable(item, item.selected)
     },
@@ -390,18 +453,7 @@ export default {
         })
       }
     },
-    changeAutoRefresh(val) {
-      try {
-        this.autoRefresh.data = ~~val
-        this.autoRefresh = dbPut({ ...this.autoRefresh })
-      } catch (err) {
-        console.error(`[LOG]: autoRefresh -> err`, err)
-        this.$notification['error']({
-          message: 'error in changeAutoRefresh',
-          description: err.message
-        })
-      }
-    },
+
     async getQrCode() {
       try {
         const { address, ss, qrcode } = await window.getQrCode()
@@ -420,6 +472,7 @@ export default {
         console.log(`[LOG]: setClipboard -> err`, err)
       }
     },
+
     openWhistle() {
       window.webview(process.env.VUE_APP_WHISTLE_API)
     }
