@@ -3,6 +3,8 @@
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const package = require('./package.json')
+const utoolsPlugin = require('./plugin.json')
 
 module.exports = {
   lintOnSave: true,
@@ -12,7 +14,18 @@ module.exports = {
     return {
       plugins: [
         new CopyWebpackPlugin([{ from: './README.md' }]),
-        new CopyWebpackPlugin([{ from: './preload/', to: 'preload/' }])
+        new CopyWebpackPlugin([{ from: './preload/', to: 'preload/' }]),
+        new CopyWebpackPlugin([
+          {
+            from: './plugin.json',
+            transform: (content, path) => {
+              return Buffer.from(JSON.stringify({
+                ...utoolsPlugin,
+                version: package.version
+              }))
+            }
+          }
+        ])
       ]
     }
   },

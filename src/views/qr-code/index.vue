@@ -94,6 +94,7 @@ import { Button } from 'ant-design-vue'
 
 const http = new Http()
 const DB_ID_FIELD_NAME = 'autoRefresh'
+const DELAY = 100
 
 export default {
   data() {
@@ -363,7 +364,7 @@ export default {
         this.defaultRules = res.rules.defaultRules
         this.server = res.server
 
-        setTimeout(this.autoReloadWhistleRules, 1000)
+        setTimeout(this.autoReloadWhistleRules, DELAY)
       } catch (err) {
         console.log(`[LOG]: initWhistle -> err`, err)
       }
@@ -382,10 +383,10 @@ export default {
           } else {
             await this.initWhistle()
           }
-        }, 1000)
+        }, DELAY)
       } catch (err) {
         console.log(`[LOG]: autoReloadWhistleRules -> err`, err)
-        setTimeout(this.autoReloadWhistleRules, 1000)
+        setTimeout(this.autoReloadWhistleRules, DELAY)
       }
     },
     async getWhistleRules() {
