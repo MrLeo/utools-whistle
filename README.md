@@ -2,7 +2,7 @@
 
 > 提供给uTools的Whistle插件，方便操作Whistle规则
 >
-> 下载地址：[upx](https://raw.githubusercontent.com/MrLeo/utools-whistle/master/62451358-1.0.0.upx)
+> 下载地址：[upx](https://raw.githubusercontent.com/MrLeo/utools-whistle/master/whistle-1.0.0.upx)
 
 
 ![1.png](https://raw.githubusercontent.com/MrLeo/utools-whistle/master/doc-imgs/1.png)
