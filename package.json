@@ -1,6 +1,6 @@
 {
   "name": "whistle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "start": "npm run watch && npm run watch:preload && npm run build:webui",
