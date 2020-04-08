@@ -23,7 +23,7 @@
 
           <a-card-meta class="card-meta">
             <a-tooltip slot="title" title="点击复制IP" placement="right">
-              <div class="card-meta__text" @click="setClipboard(address)">{{ address }}</div>
+              <div class="card-meta__text" @click="setClipboard(ip)">{{ address }}</div>
             </a-tooltip>
             <a-tooltip slot="description" title="点击复制SS地址" placement="right">
               <div class="card-meta__text" @click="setClipboard(ss)">{{ ss }}</div>
@@ -99,6 +99,8 @@ const DELAY = 500
 export default {
   data() {
     return {
+      ip: '',
+      port: '',
       address: '',
       ss: '',
       qrcode: '',
@@ -471,7 +473,9 @@ export default {
 
     async getQrCode() {
       try {
-        const { address, ss, qrcode } = await window.getQrCode()
+        const { ip, port, address, ss, qrcode } = await window.getQrCode()
+        this.ip = ip
+        this.port = port
         this.address = address
         this.ss = ss
         this.qrcode = qrcode

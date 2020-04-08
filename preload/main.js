@@ -18,11 +18,15 @@ fixPath()
 
 // #region getQrCode - 生成二维码
 window.getQrCode = async function() {
-  const address = `${ip.address()}:8899`
+  const ipAddress = ip.address()
+  const port = `8899`
+  const address = `${ipAddress}:${port}`
   const ss = `http://${Base64.encode(address).replace(/=+$/, '')}#w2`
   const qrcode = await QRCode.toDataURL(ss)
 
   return {
+    ip: ipAddress,
+    port,
     address,
     ss,
     qrcode
