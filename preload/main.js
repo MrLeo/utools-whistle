@@ -111,11 +111,11 @@ window.setClipboard = function(text) {
 
 // #region webview - 内嵌web页面
 window.webview = function(url) {
-  let window = new remote.BrowserWindow({
+  let win = new remote.BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: { webSecurity: false }
   })
-  window.loadURL(url)
+  win.loadURL(url)
 }
 // #endregion
