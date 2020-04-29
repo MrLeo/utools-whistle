@@ -3,8 +3,8 @@
 // 可以在此文件内调用uTools 、nodejs、electron提供的api
 // 开发者可以暴露自定义API供后加载脚本使用
 
-const { clipboard, remote } = require('electron')
-// const path = require('path')
+const { clipboard, remote, shell } = require('electron')
+const path = require('path')
 // const electronLocalshortcut = require('electron-localshortcut')
 
 const ip = require('./lib/output/ip')
@@ -114,8 +114,15 @@ window.webview = function(url) {
   let win = new remote.BrowserWindow({
     width: 1200,
     height: 800,
-    webPreferences: { webSecurity: false }
+    webPreferences: {
+      webSecurity: false,
+      preload: path.join(__dirname, 'browser-window.js')
+    }
   })
+
+  // 开发打开BrowserWindow控制台
+  // win.webContents.openDevTools()
+
   win.loadURL(url)
 }
 // #endregion

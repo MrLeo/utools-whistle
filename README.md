@@ -21,8 +21,8 @@
 
 - [whistle](http://wproxy.org/whistle/) / [whistle/issues/398](https://github.com/avwo/whistle/issues/398)
 - [uTools](https://u.tools/docs/developer/config.html)
+- [Electron](https://electronjs.org/)
 - [Ant Design of Vue](https://www.antdv.com/docs/vue/introduce-cn/)
-- [Whistle chrome 第三方插件](https://gitee.com/thesadboy/whistle-rules-plugin)
 - [utools-dingtalk](https://github.com/vfasky/utools-dingtalk/blob/master/preload.js)
 
 
