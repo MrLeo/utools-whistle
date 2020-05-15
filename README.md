@@ -1,9 +1,10 @@
 # whistle
 
 > 提供给uTools的Whistle插件，方便操作Whistle规则
->
-> 下载地址：[utools-whistle](https://github.com/MrLeo/utools-whistle/releases/latest)
 
+下载地址: [utools-whistle](https://github.com/MrLeo/utools-whistle/releases/latest)
+
+更新说明: [releases](https://github.com/MrLeo/utools-whistle/releases)
 
 ![1.png](https://raw.githubusercontent.com/MrLeo/utools-whistle/master/doc-imgs/1.png)
 ![2.png](https://raw.githubusercontent.com/MrLeo/utools-whistle/master/doc-imgs/2.png)
