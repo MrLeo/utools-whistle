@@ -7,11 +7,19 @@
 <script>
 export default {
   beforeCreate() {
-    window.utools &&
-      window.utools.onPluginEnter(({ code, type, payload }) => {
-        console.log('用户进入插件', code, type, payload)
-        this.$router.push({ path: `/${code}` })
-      })
+    window.utools.onPluginEnter(async ({ code, type, payload }) => {
+      console.log('用户进入插件', { code, type, payload })
+      switch (code) {
+        case 'network':
+          window.webview(process.env.VUE_APP_WHISTLE_API + '#network')
+          window.utools.outPlugin()
+          break
+
+        default:
+          this.$router.push({ path: `/${code}` })
+          break
+      }
+    })
   }
 }
 </script>

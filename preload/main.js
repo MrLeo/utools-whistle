@@ -111,18 +111,26 @@ window.setClipboard = function(text) {
 
 // #region webview - 内嵌web页面
 window.webview = function(url) {
-  let win = new remote.BrowserWindow({
-    width: 1200,
-    height: 800,
-    webPreferences: {
-      webSecurity: false,
-      preload: path.join(__dirname, 'browser-window.js')
-    }
-  })
+  try {
+    let win = new remote.BrowserWindow({
+      width: 1200,
+      height: 800,
+      webPreferences: {
+        webSecurity: false,
+        preload: path.join(__dirname, 'browser-window.js')
+      }
+    })
 
-  // 开发打开BrowserWindow控制台
-  // win.webContents.openDevTools()
-
-  win.loadURL(url)
+    // 开发打开BrowserWindow控制台
+    // win.webContents.openDevTools()
+    win.loadURL(url)
+  } catch (err) {
+    window.utools.ubrowser
+      // .devTools('bottom')
+      .goto(url)
+      .css(`#container { min-width: 100% !important; min-height: 100% !important; }`)
+      // .css(`.w-req-data-headers .order, .w-req-data-content .order { width: 35px !important; }`)
+      .run({ width: 1200, height: 800 })
+  }
 }
 // #endregion

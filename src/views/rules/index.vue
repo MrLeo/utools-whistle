@@ -217,7 +217,7 @@ export default {
         this.steps[1].loading = true
         this.steps[1].desc = ''
 
-        await window.whistleCheck()
+        await this.setWhistleVersion()
 
         this.steps[1].status = 'finish'
       } catch (err) {
@@ -228,8 +228,9 @@ export default {
             {
               props: { size: 'small', type: 'primary' },
               on: {
-                click: () => {
-                  this.installWhistle()
+                click: async () => {
+                  await this.installWhistle()
+                  await this.checkWhistleStatus()
                 }
               }
             },
@@ -242,6 +243,22 @@ export default {
         this.steps[1].loading = false
       }
     },
+    async setWhistleVersion() {
+      const res = await window.whistleCheck()
+      this.steps[1].desc = this.$createElement(
+        Button,
+        {
+          props: { size: 'small', type: 'primary' },
+          on: {
+            click: async () => {
+              await this.installWhistle()
+              await this.checkWhistleStatus()
+            }
+          }
+        },
+        [`当前版本${res.data}点击更新`]
+      )
+    },
     async installWhistle() {
       try {
         this.steps[1].status = 'process'
@@ -249,7 +266,7 @@ export default {
         this.steps[1].desc = ''
 
         await window.whistleInstall()
-        await window.whistleCheck()
+        await this.setWhistleVersion()
 
         this.steps[1].status = 'finish'
       } catch (err) {
@@ -493,16 +510,7 @@ export default {
     },
 
     openWhistle() {
-      try {
-        window.webview(process.env.VUE_APP_WHISTLE_API)
-      } catch (err) {
-        window.utools.ubrowser
-          // .devTools('bottom')
-          .goto(process.env.VUE_APP_WHISTLE_API + '#network')
-          .css(`#container { min-width: 100% !important; min-height: 100% !important; }`)
-          // .css(`.w-req-data-headers .order, .w-req-data-content .order { width: 35px !important; }`)
-          .run({ width: 1200, height: 800 })
-      }
+      window.webview(process.env.VUE_APP_WHISTLE_API + '#network')
     }
   }
 }

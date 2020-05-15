@@ -4,21 +4,17 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 export const routes = [
+  // {
+  //   path: '/',
+  //   redirect: '/rules'
+  // },
   {
-    path: '/qrcode',
-    name: 'qrcode',
+    path: '/rules',
+    name: 'rules',
     meta: {
-      title: 'qrcode'
+      title: 'rules'
     },
-    component: () => import(/* webpackChunkName: "qr-code" */ '../views/qr-code/index.vue')
-  },
-  {
-    path: '/whistle',
-    name: 'whistle',
-    meta: {
-      title: 'whistle'
-    },
-    component: () => import(/* webpackChunkName: "about" */ '../views/whistle/index.vue')
+    component: () => import(/* webpackChunkName: "rules" */ '../views/rules/index.vue')
   },
   {
     path: '/about',

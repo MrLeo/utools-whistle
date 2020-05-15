@@ -8,8 +8,14 @@
   "preload": "preload/main.js",
   "features": [
     {
-      "code": "qrcode",
-      "explain": "whistle快捷操作",
+      "code": "rules",
+      "explain": "whistle规则管理",
+      "icon": "rocket.png",
+      "cmds": ["w2", "whistle"]
+    },
+    {
+      "code": "network",
+      "explain": "whistle控制台",
       "icon": "rocket.png",
       "cmds": ["w2", "whistle"]
     }
