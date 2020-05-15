@@ -493,7 +493,16 @@ export default {
     },
 
     openWhistle() {
-      window.webview(process.env.VUE_APP_WHISTLE_API)
+      try {
+        window.webview(process.env.VUE_APP_WHISTLE_API)
+      } catch (err) {
+        window.utools.ubrowser
+          // .devTools('bottom')
+          .goto(process.env.VUE_APP_WHISTLE_API + '#network')
+          .css(`#container { min-width: 100% !important; min-height: 100% !important; }`)
+          // .css(`.w-req-data-headers .order, .w-req-data-content .order { width: 35px !important; }`)
+          .run({ width: 1200, height: 800 })
+      }
     }
   }
 }
