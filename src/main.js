@@ -17,6 +17,9 @@ import {
   Tooltip
 } from 'ant-design-vue'
 
+// import devtools from '@vue/devtools'
+// devtools.connect('localhost', 8098)
+
 Vue.component(Row.name, Row)
 Vue.component(Col.name, Col)
 Vue.component(Card.name, Card)

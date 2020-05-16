@@ -18,33 +18,13 @@
     </a-row>
     <a-row :gutter="16">
       <a-col :span="8">
-        <a-card hoverable>
-          <img slot="cover" :src="qrcode" :alt="ss" />
-
-          <a-card-meta class="card-meta">
-            <a-tooltip slot="title" title="点击复制IP" placement="right">
-              <div class="card-meta__text" @click="setClipboard(ip)">{{ address }}</div>
-            </a-tooltip>
-            <a-tooltip slot="description" title="点击复制SS地址" placement="right">
-              <div class="card-meta__text" @click="setClipboard(ss)">{{ ss }}</div>
-            </a-tooltip>
-          </a-card-meta>
-
-          <template slot="actions" class="ant-card-actions">
-            <!-- <router-link to="/whistle"
-              ><a-icon type="ellipsis" key="ellipsis" />&nbsp;查看Whistle控制台</router-link
-            > -->
-            <div @click="openWhistle">
-              <a-icon type="ellipsis" key="ellipsis" />&nbsp;查看Whistle控制台
-            </div>
-          </template>
-        </a-card>
+        <WhistleQrcode></WhistleQrcode>
       </a-col>
 
       <a-col :span="16">
         <a-card :loading="!whistleRunning || loading" title="规则管理" class="list">
           <div slot="extra">
-            <a-icon type="sync" :spin="!!autoRefresh.data || loading" @click="refresh" />
+            <a-icon type="sync" :spin="!!autoRefresh.data || loading" @click="initWhistle" />
           </div>
 
           <a-list class="list" size="small" itemLayout="horizontal" :dataSource="rules">
@@ -91,20 +71,16 @@
 import { Http } from '../../utils/http'
 import { dbPut, dbGet } from '../../utils/utools'
 import { Button } from 'ant-design-vue'
+import WhistleQrcode from '@/views/rules/components/WhistleQrcode'
 
 const http = new Http()
 const DB_ID_FIELD_NAME = 'autoRefresh'
 const DELAY = 500
 
 export default {
+  components: { WhistleQrcode },
   data() {
     return {
-      ip: '',
-      port: '',
-      address: '',
-      ss: '',
-      qrcode: '',
-
       apiUrl: process.env.VUE_APP_WHISTLE_API,
       version: '',
       latestVersion: '',
@@ -166,7 +142,6 @@ export default {
   },
   created() {
     try {
-      this.getQrCode()
       this.autoRefresh = dbGet(DB_ID_FIELD_NAME, true, true)
     } catch (err) {
       console.error(`[LOG]: created -> err`, err)
@@ -194,6 +169,7 @@ export default {
         this.whistleRunning = false
       }
     },
+    /** 检查本地是否安装Node */
     async checkNode() {
       try {
         this.steps[0].status = 'process'
@@ -211,13 +187,14 @@ export default {
         this.steps[0].loading = false
       }
     },
+    /** 检查本地是否安装Whistle */
     async checkWhistle() {
       try {
         this.steps[1].status = 'process'
         this.steps[1].loading = true
         this.steps[1].desc = ''
 
-        await this.setWhistleVersion()
+        await window.whistleCheck()
 
         this.steps[1].status = 'finish'
       } catch (err) {
@@ -243,22 +220,7 @@ export default {
         this.steps[1].loading = false
       }
     },
-    async setWhistleVersion() {
-      const res = await window.whistleCheck()
-      this.steps[1].desc = this.$createElement(
-        Button,
-        {
-          props: { size: 'small', type: 'primary' },
-          on: {
-            click: async () => {
-              await this.installWhistle()
-              await this.checkWhistleStatus()
-            }
-          }
-        },
-        [`当前版本${res.data}点击更新`]
-      )
-    },
+    /** 安装Whistle */
     async installWhistle() {
       try {
         this.steps[1].status = 'process'
@@ -266,7 +228,7 @@ export default {
         this.steps[1].desc = ''
 
         await window.whistleInstall()
-        await this.setWhistleVersion()
+        await window.whistleCheck()
 
         this.steps[1].status = 'finish'
       } catch (err) {
@@ -277,6 +239,7 @@ export default {
         this.steps[1].loading = false
       }
     },
+    /** 检查Whistle状态 */
     async checkWhistleStatus(cmd = 'status') {
       try {
         this.steps[2].status = 'process'
@@ -342,12 +305,40 @@ export default {
         throw new Error(err.message)
       } finally {
         this.steps[2].loading = false
+        this.setWhistleVersion()
       }
     },
+    /** 重新安装/升级Whistle */
+    setWhistleVersion() {
+      let btnTxt = `重新安装 ${this.version}`
 
-    async refresh() {
-      this.initWhistle()
+      if (this.latestVersion && this.version !== this.latestVersion) {
+        btnTxt = `升级 ${this.version} -> ${this.latestVersion}`
+      }
+      console.log(`[LOG]: setWhistleVersion -> btnTxt`, btnTxt)
+
+      this.steps[1].desc = this.$createElement(
+        Button,
+        {
+          props: { size: 'small', type: 'primary' },
+          on: {
+            click: async () => {
+              this.loading = true
+              this.whistleRunning = false
+              await this.installWhistle()
+              await this.checkWhistleStatus('restart')
+              setTimeout(() => {
+                this.whistleRunning = true
+                this.initWhistle()
+              }, 0)
+            }
+          }
+        },
+        [btnTxt]
+      )
     },
+
+    /** 改变自动更新状态 */
     changeAutoRefresh(val) {
       try {
         this.autoRefresh.data = ~~val
@@ -361,6 +352,7 @@ export default {
       }
     },
 
+    /** 初始化Whistle规则配置 */
     async initWhistle() {
       try {
         if (!this.whistleRunning) return
@@ -388,6 +380,7 @@ export default {
         console.log(`[LOG]: initWhistle -> err`, err)
       }
     },
+    /** 自动更新规则列表 */
     async autoReloadWhistleRules() {
       try {
         if (!this.whistleRunning) return
@@ -408,6 +401,7 @@ export default {
         setTimeout(this.autoReloadWhistleRules, DELAY)
       }
     },
+    /** 获取规则列表 */
     async getWhistleRules() {
       const res = await http.get(`${this.url}/cgi-bin/get-data`, {
         params: {
@@ -429,12 +423,14 @@ export default {
 
       return res
     },
+    /** 应用修改并获取最新的规则 */
     async manuallyModifyRules() {
       const res = await this.getWhistleRules()
       if (this.mrulesClientId !== res.mrulesClientId || this.mrulesTime !== res.mrulesTime) {
         await this.initWhistle()
       }
     },
+    /** 修改自定义规则状态 */
     async changeRule(item) {
       try {
         let url = !item.selected
@@ -461,6 +457,7 @@ export default {
         })
       }
     },
+    /** 修改默认规则状态 */
     async changeDefault(value) {
       try {
         let url = value
@@ -486,31 +483,6 @@ export default {
           description: err.message
         })
       }
-    },
-
-    async getQrCode() {
-      try {
-        const { ip, port, address, ss, qrcode } = await window.getQrCode()
-        this.ip = ip
-        this.port = port
-        this.address = address
-        this.ss = ss
-        this.qrcode = qrcode
-      } catch (err) {
-        console.error(`[LOG]: getQrCode -> err`, err)
-      }
-    },
-    setClipboard(text) {
-      try {
-        window.setClipboard(text)
-        this.$message.success(`复制成功:${text}`)
-      } catch (err) {
-        console.log(`[LOG]: setClipboard -> err`, err)
-      }
-    },
-
-    openWhistle() {
-      window.webview(process.env.VUE_APP_WHISTLE_API + '#network')
     }
   }
 }
@@ -534,9 +506,14 @@ export default {
   }
 }
 </style>
+
 <style lang="scss">
 .ant-steps {
   min-height: 50px;
+
+  &.ant-steps-horizontal:not(.ant-steps-label-vertical) .ant-steps-item-description {
+    max-width: 100%;
+  }
 }
 .card-meta {
   .ant-card-meta-detail {
