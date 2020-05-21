@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { open } from '../../../utils/utools'
 export default {
   data() {
     return {
@@ -66,7 +67,7 @@ export default {
       }
     },
     openWhistle() {
-      window.webview(process.env.VUE_APP_WHISTLE_API + '#network')
+      open(process.env.VUE_APP_WHISTLE_API + '#network')
     }
   }
 }

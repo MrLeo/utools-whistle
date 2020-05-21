@@ -4,10 +4,14 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 export const routes = [
-  // {
-  //   path: '/',
-  //   redirect: '/rules'
-  // },
+  {
+    path: '/',
+    redirect: '/rules'
+  },
+  {
+    path: '/network',
+    redirect: '/rules'
+  },
   {
     path: '/rules',
     name: 'rules',

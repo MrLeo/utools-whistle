@@ -74,3 +74,25 @@ export function dbUpdate(data) {
 export function dbAll() {
   return window.utools.db.allDocs()
 }
+
+/**
+ * uBrowser 打开页面
+ * @param {String} url UBrowser打开的链接地址
+ */
+export function open(url) {
+  const browsers = window.utools.getIdleUBrowsers() || []
+
+  const opendBrowser = browsers.find(browser => browser.url.indexOf(url) !== -1)
+
+  if (opendBrowser) {
+    return window.utools.ubrowser.goto(url).run(opendBrowser.id)
+  }
+
+  return (
+    window.utools.ubrowser
+      // .devTools('bottom')
+      .goto(url)
+      .css(`#container { min-width: 100% !important; min-height: 100% !important; }`)
+      .run({ width: 1200, height: 800 })
+  )
+}

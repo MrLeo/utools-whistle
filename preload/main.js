@@ -128,8 +128,6 @@ window.webview = function(url) {
     window.utools.ubrowser
       // .devTools('bottom')
       .goto(url)
-      .css(`#container { min-width: 100% !important; min-height: 100% !important; }`)
-      // .css(`.w-req-data-headers .order, .w-req-data-content .order { width: 35px !important; }`)
       .run({ width: 1200, height: 800 })
   }
 }

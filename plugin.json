@@ -9,15 +9,15 @@
   "features": [
     {
       "code": "rules",
-      "explain": "whistle规则管理",
+      "explain": "whistle 规则管理",
       "icon": "rocket.png",
       "cmds": ["w2", "whistle"]
     },
     {
       "code": "network",
-      "explain": "whistle控制台",
-      "icon": "rocket.png",
-      "cmds": ["w2", "whistle"]
+      "explain": "whistle 控制台",
+      "icon": "whistle.png",
+      "cmds": ["w2-network", "whistle"]
     }
   ]
 }
