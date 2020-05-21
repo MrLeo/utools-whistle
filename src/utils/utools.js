@@ -85,7 +85,7 @@ export function open(url) {
   const opendBrowser = browsers.find(browser => browser.url.indexOf(url) !== -1)
 
   if (opendBrowser) {
-    return window.utools.ubrowser.goto(url).run(opendBrowser.id)
+    return window.utools.ubrowser.show().run(opendBrowser.id)
   }
 
   return (
