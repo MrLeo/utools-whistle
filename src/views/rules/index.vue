@@ -483,6 +483,49 @@ export default {
           description: err.message
         })
       }
+    },
+
+    /** 初始化Rules */
+    async setDefaultRules() {
+      try {
+        const blob = new Blob([JSON.stringify(require('./data/rules.json'))], {
+          type: 'plain/text'
+        })
+        const files = new window.File([blob], 'rules.txt', { type: 'plain/text' })
+
+        const form = new FormData()
+        form.append('rules', files)
+        form.append('replaceAll', 1)
+
+        await http.post(`${this.url}/cgi-bin/rules/import?clientId=${this.clientId}`, form)
+      } catch (err) {
+        console.error(`[LOG]: setDefaultRules -> err`, err)
+        this.$notification['error']({
+          message: 'error in setDefaultRules',
+          description: err.message
+        })
+      }
+    },
+    /** 初始化Values */
+    async setDefaultValues() {
+      try {
+        const blob = new Blob([JSON.stringify(require('./data/values.json'))], {
+          type: 'plain/text'
+        })
+        const files = new window.File([blob], 'rules.txt', { type: 'plain/text' })
+
+        const form = new FormData()
+        form.append('rules', files)
+        form.append('replaceAll', 1)
+
+        await http.post(`${this.url}/cgi-bin/values/import?clientId=${this.clientId}`, form)
+      } catch (err) {
+        console.error(`[LOG]: setDefaultValues -> err`, err)
+        this.$notification['error']({
+          message: 'error in setDefaultValues',
+          description: err.message
+        })
+      }
     }
   }
 }
