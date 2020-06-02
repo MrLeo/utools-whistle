@@ -488,7 +488,7 @@ export default {
 
     /** 初始化Rules */
     async setDefaultRules() {
-      try {
+      /* try {
         const blob = new Blob([JSON.stringify(require('./data/rules.json'))], {
           type: 'plain/text'
         })
@@ -505,11 +505,11 @@ export default {
           message: 'error in setDefaultRules',
           description: err.message
         })
-      }
+      } */
     },
     /** 初始化Values */
     async setDefaultValues() {
-      try {
+      /* try {
         const blob = new Blob([JSON.stringify(require('./data/values.json'))], {
           type: 'plain/text'
         })
@@ -526,7 +526,7 @@ export default {
           message: 'error in setDefaultValues',
           description: err.message
         })
-      }
+      } */
     }
   }
 }
