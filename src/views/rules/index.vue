@@ -305,7 +305,9 @@ export default {
         throw new Error(err.message)
       } finally {
         this.steps[2].loading = false
-        this.setWhistleVersion()
+        setTimeout(() => {
+          this.setWhistleVersion()
+        }, 1000)
       }
     },
     /** 重新安装/升级Whistle */
@@ -315,7 +317,6 @@ export default {
       if (this.latestVersion && this.version !== this.latestVersion) {
         btnTxt = `升级 ${this.version} -> ${this.latestVersion}`
       }
-      console.log(`[LOG]: setWhistleVersion -> btnTxt`, btnTxt)
 
       this.steps[1].desc = this.$createElement(
         Button,
