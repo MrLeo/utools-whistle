@@ -88,11 +88,11 @@ export function open(url) {
     return window.utools.ubrowser.show().run(opendBrowser.id)
   }
 
-  return (
-    window.utools.ubrowser
-      // .devTools('bottom')
-      .goto(url)
-      .css(`#container { min-width: 100% !important; min-height: 100% !important; }`)
-      .run({ width: 1200, height: 800 })
-  )
+  return window.utools.ubrowser // .devTools('bottom')
+    .goto(url)
+    .css(
+      `#container { min-width: 100% !important; min-height: 100% !important; }
+      .w-req-data-content.fill.orient-vertical-box{ min-width: 1100px; }`
+    )
+    .run({ width: 1200, height: 800 })
 }
