@@ -1,4 +1,4 @@
-const { remote, shell } = require('electron')
+const { remote /* , shell */ } = require('electron')
 const path = require('path')
 
 // const currentWin = remote.getCurrentWindow()
