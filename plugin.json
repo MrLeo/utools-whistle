@@ -13,11 +13,17 @@
       "icon": "rocket.png",
       "cmds": ["w2", "whistle"]
     },
-    {
+    ({
       "code": "network",
       "explain": "whistle 控制台",
       "icon": "whistle.png",
       "cmds": ["w2-network", "whistle"]
+    },
+    {
+      "code": "rules",
+      "explain": "whistle 规则",
+      "icon": "whistle.png",
+      "cmds": ["w2-rules", "whistle"]
     }
   ]
 }

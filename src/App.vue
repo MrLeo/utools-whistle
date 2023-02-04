@@ -16,6 +16,11 @@ export default {
           window.utools.outPlugin()
           break
 
+        case 'rules':
+          open(process.env.VUE_APP_WHISTLE_API + '#rules')
+          window.utools.outPlugin()
+          break
+
         default:
           this.$router.push({ path: `/${code}` })
           break
