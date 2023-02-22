@@ -1,14 +1,12 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var child_process = _interopDefault(require('child_process'));
-var util = _interopDefault(require('util'));
-var fs = _interopDefault(require('fs'));
-var path = _interopDefault(require('path'));
-var stream = _interopDefault(require('stream'));
-var assert = _interopDefault(require('assert'));
-var events = _interopDefault(require('events'));
+var child_process = require('child_process');
+var util = require('util');
+var fs = require('fs');
+var path = require('path');
+var stream = require('stream');
+var assert = require('assert');
+var events = require('events');
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -16,7 +14,7 @@ function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-var hasOwnProperty = Object.prototype.hasOwnProperty;
+var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
 
 var pseudomap = PseudoMap;
 
@@ -102,7 +100,7 @@ function same (a, b) {
   return a === b || a !== a && b !== b
 }
 
-function Entry (k, v, i) {
+function Entry$1 (k, v, i) {
   this.key = k;
   this.value = v;
   this._index = i;
@@ -110,7 +108,7 @@ function Entry (k, v, i) {
 
 function find (data, k) {
   for (var i = 0, s = '_' + k, key = s;
-       hasOwnProperty.call(data, key);
+       hasOwnProperty$1.call(data, key);
        key = s + i++) {
     if (same(data[key].key, k))
       return data[key]
@@ -119,7 +117,7 @@ function find (data, k) {
 
 function set (data, k, v) {
   for (var i = 0, s = '_' + k, key = s;
-       hasOwnProperty.call(data, key);
+       hasOwnProperty$1.call(data, key);
        key = s + i++) {
     if (same(data[key].key, k)) {
       data[key].value = v;
@@ -127,7 +125,7 @@ function set (data, k, v) {
     }
   }
   data.size++;
-  data[key] = new Entry(k, v, key);
+  data[key] = new Entry$1(k, v, key);
 }
 
 var map = createCommonjsModule(function (module) {
@@ -840,7 +838,7 @@ LRUCache.prototype.set = function (key, value, maxAge) {
     return true
   }
 
-  var hit = new Entry$1(key, value, len, now, maxAge);
+  var hit = new Entry(key, value, len, now, maxAge);
 
   // oversized objects fall out of cache automatically.
   if (hit.length > this[MAX]) {
@@ -972,7 +970,7 @@ function del (self, node) {
 }
 
 // classy, since V8 prefers predictable objects.
-function Entry$1 (key, value, length, now, maxAge) {
+function Entry (key, value, length, now, maxAge) {
   this.key = key;
   this.value = value;
   this.length = length;
@@ -980,8 +978,8 @@ function Entry$1 (key, value, length, now, maxAge) {
   this.maxAge = maxAge || 0;
 }
 
-var windows = isexe;
-isexe.sync = sync;
+var windows = isexe$2;
+isexe$2.sync = sync$5;
 
 
 
@@ -1006,39 +1004,39 @@ function checkPathExt (path, options) {
   return false
 }
 
-function checkStat (stat, path, options) {
+function checkStat$1 (stat, path, options) {
   if (!stat.isSymbolicLink() && !stat.isFile()) {
     return false
   }
   return checkPathExt(path, options)
 }
 
-function isexe (path, options, cb) {
+function isexe$2 (path, options, cb) {
   fs.stat(path, function (er, stat) {
-    cb(er, er ? false : checkStat(stat, path, options));
+    cb(er, er ? false : checkStat$1(stat, path, options));
   });
 }
 
-function sync (path, options) {
-  return checkStat(fs.statSync(path), path, options)
+function sync$5 (path, options) {
+  return checkStat$1(fs.statSync(path), path, options)
 }
 
 var mode = isexe$1;
-isexe$1.sync = sync$1;
+isexe$1.sync = sync$4;
 
 
 
 function isexe$1 (path, options, cb) {
   fs.stat(path, function (er, stat) {
-    cb(er, er ? false : checkStat$1(stat, options));
+    cb(er, er ? false : checkStat(stat, options));
   });
 }
 
-function sync$1 (path, options) {
-  return checkStat$1(fs.statSync(path), options)
+function sync$4 (path, options) {
+  return checkStat(fs.statSync(path), options)
 }
 
-function checkStat$1 (stat, options) {
+function checkStat (stat, options) {
   return stat.isFile() && checkMode(stat, options)
 }
 
@@ -1072,10 +1070,10 @@ if (process.platform === 'win32' || commonjsGlobal.TESTING_WINDOWS) {
   core = mode;
 }
 
-var isexe_1 = isexe$2;
-isexe$2.sync = sync$2;
+var isexe_1 = isexe;
+isexe.sync = sync$3;
 
-function isexe$2 (path, options, cb) {
+function isexe (path, options, cb) {
   if (typeof options === 'function') {
     cb = options;
     options = {};
@@ -1087,7 +1085,7 @@ function isexe$2 (path, options, cb) {
     }
 
     return new Promise(function (resolve, reject) {
-      isexe$2(path, options || {}, function (er, is) {
+      isexe(path, options || {}, function (er, is) {
         if (er) {
           reject(er);
         } else {
@@ -1109,7 +1107,7 @@ function isexe$2 (path, options, cb) {
   });
 }
 
-function sync$2 (path, options) {
+function sync$3 (path, options) {
   // my kingdom for a filtered catch
   try {
     return core.sync(path, options || {})
@@ -1294,7 +1292,7 @@ var hasBrokenSpawn = (function () {
     return (nodeVer[0] === 0 && nodeVer[1] < 12);
 })();
 
-var isWin = process.platform === 'win32';
+var isWin$2 = process.platform === 'win32';
 var shebangCache = new lruCache({ max: 50, maxAge: 30 * 1000 });  // Cache just for 30sec
 
 function readShebang(command) {
@@ -1385,7 +1383,7 @@ function parse(command, args, options) {
     options = options || {};
     original = command;
 
-    if (isWin) {
+    if (isWin$2) {
         // Detect & add support for shebangs
         file = resolveCommand_1(command);
         file = file || resolveCommand_1(command, true);
@@ -1507,7 +1505,7 @@ var enoent = {
 	notFoundError: notFoundError_1
 };
 
-var spawnSync = createCommonjsModule(function (module) {
+var spawnSync$1 = createCommonjsModule(function (module) {
 
 module.exports = child_process.spawnSync;
 
@@ -1535,13 +1533,13 @@ function spawn(command, args, options) {
     return spawned;
 }
 
-function spawnSync$1(command, args, options) {
+function spawnSync(command, args, options) {
     var parsed;
     var result;
 
     if (!cpSpawnSync) {
         try {
-            cpSpawnSync = spawnSync;  // eslint-disable-line global-require
+            cpSpawnSync = spawnSync$1;  // eslint-disable-line global-require
         } catch (ex) {
             throw new Error(
                 'In order to use spawnSync on node 0.10 or older, you must ' +
@@ -1565,12 +1563,12 @@ function spawnSync$1(command, args, options) {
 
 var crossSpawn = spawn;
 var spawn_1 = spawn;
-var sync$3 = spawnSync$1;
+var sync$2 = spawnSync;
 
 var _parse = parse_1;
 var _enoent = enoent;
 crossSpawn.spawn = spawn_1;
-crossSpawn.sync = sync$3;
+crossSpawn.sync = sync$2;
 crossSpawn._parse = _parse;
 crossSpawn._enoent = _enoent;
 
@@ -1642,7 +1640,7 @@ module.exports.env = opts => {
 	return env;
 };
 });
-var npmRunPath_1 = npmRunPath.env;
+npmRunPath.env;
 
 var isStream_1 = createCommonjsModule(function (module) {
 
@@ -1967,7 +1965,7 @@ object-assign
 */
 /* eslint-disable no-unused-vars */
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 function toObject(val) {
@@ -2031,7 +2029,7 @@ var objectAssign = shouldUseNative() ? Object.assign : function (target, source)
 		from = Object(arguments[s]);
 
 		for (var key in from) {
-			if (hasOwnProperty$1.call(from, key)) {
+			if (hasOwnProperty.call(from, key)) {
 				to[key] = from[key];
 			}
 		}
@@ -2176,7 +2174,7 @@ var pFinally = (promise, onFinally) => {
 	);
 };
 
-var signals = createCommonjsModule(function (module) {
+var signals$1 = createCommonjsModule(function (module) {
 // This is not the set of all possible signals.
 //
 // It IS, however, the set of all signals that trigger
@@ -2236,7 +2234,8 @@ if (process.platform === 'linux') {
 // that are in the direct sync flow of nyc's outputCoverage are
 // ignored, since we can never get coverage for them.
 
-var signals$1 = signals;
+var signals = signals$1;
+var isWin = /^win/i.test(process.platform);
 
 var EE = events;
 /* istanbul ignore if */
@@ -2293,7 +2292,7 @@ function unload () {
   }
   loaded = false;
 
-  signals$1.forEach(function (sig) {
+  signals.forEach(function (sig) {
     try {
       process.removeListener(sig, sigListeners[sig]);
     } catch (er) {}
@@ -2313,7 +2312,7 @@ function emit (event, code, signal) {
 
 // { <signal>: <listener fn>, ... }
 var sigListeners = {};
-signals$1.forEach(function (sig) {
+signals.forEach(function (sig) {
   sigListeners[sig] = function listener () {
     // If there are no other listeners, an exit is coming!
     // Simplest way: remove us and then re-send the signal.
@@ -2326,13 +2325,18 @@ signals$1.forEach(function (sig) {
       /* istanbul ignore next */
       emit('afterexit', null, sig);
       /* istanbul ignore next */
+      if (isWin && sig === 'SIGHUP') {
+        // "SIGHUP" throws an `ENOSYS` error on Windows,
+        // so use a supported signal instead
+        sig = 'SIGINT';
+      }
       process.kill(process.pid, sig);
     }
   };
 });
 
 var signals_1 = function () {
-  return signals$1
+  return signals
 };
 
 var load_1 = load;
@@ -2351,7 +2355,7 @@ function load () {
   // handle it instead of us.
   emitter.count += 1;
 
-  signals$1 = signals$1.filter(function (sig) {
+  signals = signals.filter(function (sig) {
     try {
       process.on(sig, sigListeners[sig]);
       return true
@@ -2707,21 +2711,21 @@ module.exports.shellSync = (cmd, opts) => handleShell(module.exports.sync, cmd, 
 
 module.exports.spawn = util.deprecate(module.exports, 'execa.spawn() is deprecated. Use execa() instead.');
 });
-var execa_1 = execa.stdout;
-var execa_2 = execa.stderr;
-var execa_3 = execa.shell;
-var execa_4 = execa.sync;
-var execa_5 = execa.shellSync;
-var execa_6 = execa.spawn;
+execa.stdout;
+execa.stderr;
+execa.shell;
+execa.sync;
+execa.shellSync;
+execa.spawn;
 
-var ansiRegex = function () {
+var ansiRegex$1 = function () {
 	return /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
 };
 
-var ansiRegex$1 = ansiRegex();
+var ansiRegex = ansiRegex$1();
 
 var stripAnsi = function (str) {
-	return typeof str === 'string' ? str.replace(ansiRegex$1, '') : str;
+	return typeof str === 'string' ? str.replace(ansiRegex, '') : str;
 };
 
 var defaultShell = (() => {
@@ -2767,7 +2771,7 @@ var shellEnv = shell => {
 		});
 };
 
-var sync$4 = shell => {
+var sync$1 = shell => {
 	if (process.platform === 'win32') {
 		return process.env;
 	}
@@ -2783,11 +2787,11 @@ var sync$4 = shell => {
 		}
 	}
 };
-shellEnv.sync = sync$4;
+shellEnv.sync = sync$1;
 
 var shellPath = () => shellEnv().then(x => x.PATH);
-var sync$5 = () => shellEnv.sync().PATH;
-shellPath.sync = sync$5;
+var sync = () => shellEnv.sync().PATH;
+shellPath.sync = sync;
 
 var fixPath = () => {
 	if (process.platform !== 'darwin') {

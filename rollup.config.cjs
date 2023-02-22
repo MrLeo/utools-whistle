@@ -2,9 +2,9 @@
 // https://juejin.im/post/5a9fe754f265da237d028f37
 // http://www.sosout.com/2018/08/04/rollup-tutorial.html
 
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import json from 'rollup-plugin-json'
+const resolve = require('rollup-plugin-node-resolve')
+const commonjs = require('rollup-plugin-commonjs')
+const json = require('rollup-plugin-json')
 
 module.exports = [
   {

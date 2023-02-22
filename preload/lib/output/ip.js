@@ -1,9 +1,7 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var buffer = _interopDefault(require('buffer'));
-var os = _interopDefault(require('os'));
+var buffer = require('buffer');
+var os = require('os');
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;

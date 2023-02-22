@@ -1,13 +1,11 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var buffer$1 = _interopDefault(require('buffer'));
-var fs = _interopDefault(require('fs'));
-var util = _interopDefault(require('util'));
-var stream = _interopDefault(require('stream'));
-var zlib = _interopDefault(require('zlib'));
-var assert = _interopDefault(require('assert'));
+var buffer$1 = require('buffer');
+var fs = require('fs');
+var util = require('util');
+var stream = require('stream');
+var zlib = require('zlib');
+var assert = require('assert');
 
 // can-promise has a crash in some versions of react native that dont have
 // standard global objects
@@ -179,7 +177,7 @@ var bufferAlloc = function alloc (size, fill, encoding) {
   return bufferFill(buffer, fill, encoding)
 };
 
-var toString = Object.prototype.toString;
+var toString$1 = Object.prototype.toString;
 
 var isModern = (
   typeof Buffer.alloc === 'function' &&
@@ -188,7 +186,7 @@ var isModern = (
 );
 
 function isArrayBuffer (input) {
-  return toString.call(input).slice(8, -1) === 'ArrayBuffer'
+  return toString$1.call(input).slice(8, -1) === 'ArrayBuffer'
 }
 
 function fromArrayBuffer (obj, byteOffset, length) {
@@ -272,7 +270,7 @@ var CODEWORDS_COUNT = [
  * @param  {Number} version QR Code version
  * @return {Number}         size of QR code
  */
-var getSymbolSize = function getSymbolSize (version) {
+var getSymbolSize$1 = function getSymbolSize (version) {
   if (!version) throw new Error('"version" cannot be null or undefined')
   if (version < 1 || version > 40) throw new Error('"version" should be in range from 1 to 40')
   return version * 4 + 17
@@ -321,8 +319,8 @@ var toSJIS = function toSJIS (kanji) {
   return toSJISFunction(kanji)
 };
 
-var utils = {
-	getSymbolSize: getSymbolSize,
+var utils$1 = {
+	getSymbolSize: getSymbolSize$1,
 	getSymbolTotalCodewords: getSymbolTotalCodewords,
 	getBCHDigit: getBCHDigit,
 	setToSJISFunction: setToSJISFunction,
@@ -386,11 +384,11 @@ exports.from = function from (value, defaultValue) {
   }
 };
 });
-var errorCorrectionLevel_1 = errorCorrectionLevel.L;
-var errorCorrectionLevel_2 = errorCorrectionLevel.M;
-var errorCorrectionLevel_3 = errorCorrectionLevel.Q;
-var errorCorrectionLevel_4 = errorCorrectionLevel.H;
-var errorCorrectionLevel_5 = errorCorrectionLevel.isValid;
+errorCorrectionLevel.L;
+errorCorrectionLevel.M;
+errorCorrectionLevel.Q;
+errorCorrectionLevel.H;
+errorCorrectionLevel.isValid;
 
 function BitBuffer () {
   this.buffer = [];
@@ -507,7 +505,7 @@ var alignmentPattern = createCommonjsModule(function (module, exports) {
  * and their number depends on the symbol version.
  */
 
-var getSymbolSize = utils.getSymbolSize;
+var getSymbolSize = utils$1.getSymbolSize;
 
 /**
  * Calculate the row/column coordinates of the center module of each alignment pattern
@@ -581,10 +579,10 @@ exports.getPositions = function getPositions (version) {
   return coords
 };
 });
-var alignmentPattern_1 = alignmentPattern.getRowColCoords;
-var alignmentPattern_2 = alignmentPattern.getPositions;
+alignmentPattern.getRowColCoords;
+alignmentPattern.getPositions;
 
-var getSymbolSize$1 = utils.getSymbolSize;
+var getSymbolSize = utils$1.getSymbolSize;
 var FINDER_PATTERN_SIZE = 7;
 
 /**
@@ -595,7 +593,7 @@ var FINDER_PATTERN_SIZE = 7;
  * @return {Array}          Array of coordinates
  */
 var getPositions = function getPositions (version) {
-  var size = getSymbolSize$1(version);
+  var size = getSymbolSize(version);
 
   return [
     // top-left
@@ -847,14 +845,14 @@ exports.getBestMask = function getBestMask (data, setupFormatFunc) {
   return bestPattern
 };
 });
-var maskPattern_1 = maskPattern.Patterns;
-var maskPattern_2 = maskPattern.isValid;
-var maskPattern_3 = maskPattern.getPenaltyN1;
-var maskPattern_4 = maskPattern.getPenaltyN2;
-var maskPattern_5 = maskPattern.getPenaltyN3;
-var maskPattern_6 = maskPattern.getPenaltyN4;
-var maskPattern_7 = maskPattern.applyMask;
-var maskPattern_8 = maskPattern.getBestMask;
+maskPattern.Patterns;
+maskPattern.isValid;
+maskPattern.getPenaltyN1;
+maskPattern.getPenaltyN2;
+maskPattern.getPenaltyN3;
+maskPattern.getPenaltyN4;
+maskPattern.applyMask;
+maskPattern.getBestMask;
 
 var EC_BLOCKS_TABLE = [
 // L  M  Q  H
@@ -1133,9 +1131,9 @@ exports.generateECPolynomial = function generateECPolynomial (degree) {
   return poly
 };
 });
-var polynomial_1 = polynomial.mul;
-var polynomial_2 = polynomial.mod;
-var polynomial_3 = polynomial.generateECPolynomial;
+polynomial.mul;
+polynomial.mod;
+polynomial.generateECPolynomial;
 
 var Buffer$1 = buffer$1.Buffer;
 
@@ -1417,25 +1415,25 @@ exports.from = function from (value, defaultValue) {
   }
 };
 });
-var mode_1 = mode.NUMERIC;
-var mode_2 = mode.ALPHANUMERIC;
-var mode_3 = mode.BYTE;
-var mode_4 = mode.KANJI;
-var mode_5 = mode.MIXED;
-var mode_6 = mode.getCharCountIndicator;
-var mode_7 = mode.getBestModeForData;
-var mode_8 = mode.isValid;
+mode.NUMERIC;
+mode.ALPHANUMERIC;
+mode.BYTE;
+mode.KANJI;
+mode.MIXED;
+mode.getCharCountIndicator;
+mode.getBestModeForData;
+mode.isValid;
 
-var toString$1 = {}.toString;
+var toString = {}.toString;
 
 var isarray = Array.isArray || function (arr) {
-  return toString$1.call(arr) == '[object Array]';
+  return toString.call(arr) == '[object Array]';
 };
 
 var version = createCommonjsModule(function (module, exports) {
 // Generator polynomial used to encode version information
 var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
-var G18_BCH = utils.getBCHDigit(G18);
+var G18_BCH = utils$1.getBCHDigit(G18);
 
 function getBestVersionForDataLength (mode, length, errorCorrectionLevel) {
   for (var currentVersion = 1; currentVersion <= 40; currentVersion++) {
@@ -1508,7 +1506,7 @@ exports.getCapacity = function getCapacity (version, errorCorrectionLevel, mode$
   if (typeof mode$1 === 'undefined') mode$1 = mode.BYTE;
 
   // Total codewords for this QR code version (Data + Error correction)
-  var totalCodewords = utils.getSymbolTotalCodewords(version);
+  var totalCodewords = utils$1.getSymbolTotalCodewords(version);
 
   // Total number of error correction codewords
   var ecTotalCodewords = errorCorrectionCode.getTotalCodewordsCount(version, errorCorrectionLevel);
@@ -1584,20 +1582,20 @@ exports.getEncodedBits = function getEncodedBits (version) {
 
   var d = version << 12;
 
-  while (utils.getBCHDigit(d) - G18_BCH >= 0) {
-    d ^= (G18 << (utils.getBCHDigit(d) - G18_BCH));
+  while (utils$1.getBCHDigit(d) - G18_BCH >= 0) {
+    d ^= (G18 << (utils$1.getBCHDigit(d) - G18_BCH));
   }
 
   return (version << 12) | d
 };
 });
-var version_1 = version.getCapacity;
-var version_2 = version.getBestVersionForData;
-var version_3 = version.getEncodedBits;
+version.getCapacity;
+version.getBestVersionForData;
+version.getEncodedBits;
 
 var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
 var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1);
-var G15_BCH = utils.getBCHDigit(G15);
+var G15_BCH = utils$1.getBCHDigit(G15);
 
 /**
  * Returns format information with relative error correction bits
@@ -1613,8 +1611,8 @@ var getEncodedBits = function getEncodedBits (errorCorrectionLevel, mask) {
   var data = ((errorCorrectionLevel.bit << 3) | mask);
   var d = data << 10;
 
-  while (utils.getBCHDigit(d) - G15_BCH >= 0) {
-    d ^= (G15 << (utils.getBCHDigit(d) - G15_BCH));
+  while (utils$1.getBCHDigit(d) - G15_BCH >= 0) {
+    d ^= (G15 << (utils$1.getBCHDigit(d) - G15_BCH));
   }
 
   // xor final data with mask pattern in order to ensure that
@@ -1776,7 +1774,7 @@ KanjiData.prototype.write = function (bitBuffer) {
   // These byte values are shifted from the JIS X 0208 values.
   // JIS X 0208 gives details of the shift coded representation.
   for (i = 0; i < this.data.length; i++) {
-    var value = utils.toSJIS(this.data[i]);
+    var value = utils$1.toSJIS(this.data[i]);
 
     // For characters with Shift JIS values from 0x8140 to 0x9FFC:
     if (value >= 0x8140 && value <= 0x9FFC) {
@@ -1902,10 +1900,9 @@ var dijkstra = {
   extract_shortest_path_from_predecessor_list: function(predecessors, d) {
     var nodes = [];
     var u = d;
-    var predecessor;
     while (u) {
       nodes.push(u);
-      predecessor = predecessors[u];
+      predecessors[u];
       u = predecessors[u];
     }
     nodes.reverse();
@@ -2019,7 +2016,7 @@ function getSegmentsFromString (dataStr) {
   var byteSegs;
   var kanjiSegs;
 
-  if (utils.isKanjiModeEnabled()) {
+  if (utils$1.isKanjiModeEnabled()) {
     byteSegs = getSegments(regex.BYTE, mode.BYTE, dataStr);
     kanjiSegs = getSegments(regex.KANJI, mode.KANJI, dataStr);
   } else {
@@ -2209,7 +2206,7 @@ function buildSingleSegment (data, modesHint) {
   }
 
   // Use Mode.BYTE if Kanji support is disabled
-  if (mode$1 === mode.KANJI && !utils.isKanjiModeEnabled()) {
+  if (mode$1 === mode.KANJI && !utils$1.isKanjiModeEnabled()) {
     mode$1 = mode.BYTE;
   }
 
@@ -2264,7 +2261,7 @@ exports.fromArray = function fromArray (array) {
  * @return {Array}          Array of segments
  */
 exports.fromString = function fromString (data, version) {
-  var segs = getSegmentsFromString(data, utils.isKanjiModeEnabled());
+  var segs = getSegmentsFromString(data);
 
   var nodes = buildNodes(segs);
   var graph = buildGraph(nodes, version);
@@ -2290,13 +2287,13 @@ exports.fromString = function fromString (data, version) {
  */
 exports.rawSplit = function rawSplit (data) {
   return exports.fromArray(
-    getSegmentsFromString(data, utils.isKanjiModeEnabled())
+    getSegmentsFromString(data)
   )
 };
 });
-var segments_1 = segments.fromArray;
-var segments_2 = segments.fromString;
-var segments_3 = segments.rawSplit;
+segments.fromArray;
+segments.fromString;
+segments.rawSplit;
 
 /**
  * QRCode for JavaScript
@@ -2536,7 +2533,7 @@ function createData (version, errorCorrectionLevel, segments) {
   });
 
   // Calculate required number of bits
-  var totalCodewords = utils.getSymbolTotalCodewords(version);
+  var totalCodewords = utils$1.getSymbolTotalCodewords(version);
   var ecTotalCodewords = errorCorrectionCode.getTotalCodewordsCount(version, errorCorrectionLevel);
   var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8;
 
@@ -2581,7 +2578,7 @@ function createData (version, errorCorrectionLevel, segments) {
  */
 function createCodewords (bitBuffer, version, errorCorrectionLevel) {
   // Total codewords for this QR code version (Data + Error correction)
-  var totalCodewords = utils.getSymbolTotalCodewords(version);
+  var totalCodewords = utils$1.getSymbolTotalCodewords(version);
 
   // Total number of error correction codewords
   var ecTotalCodewords = errorCorrectionCode.getTotalCodewordsCount(version, errorCorrectionLevel);
@@ -2708,7 +2705,7 @@ function createSymbol (data, version$1, errorCorrectionLevel, maskPattern$1) {
   var dataBits = createData(version$1, errorCorrectionLevel, segments$1);
 
   // Allocate matrix buffer
-  var moduleCount = utils.getSymbolSize(version$1);
+  var moduleCount = utils$1.getSymbolSize(version$1);
   var modules = new bitMatrix(moduleCount);
 
   // Add function modules
@@ -2759,7 +2756,7 @@ function createSymbol (data, version$1, errorCorrectionLevel, maskPattern$1) {
  * @param {String} options.errorCorrectionLevel Error correction level
  * @param {Function} options.toSJISFunc         Helper func to convert utf8 to sjis
  */
-var create = function create (data, options) {
+var create$2 = function create (data, options) {
   if (typeof data === 'undefined' || data === '') {
     throw new Error('No input text')
   }
@@ -2775,7 +2772,7 @@ var create = function create (data, options) {
     mask = maskPattern.from(options.maskPattern);
 
     if (options.toSJISFunc) {
-      utils.setToSJISFunction(options.toSJISFunc);
+      utils$1.setToSJISFunction(options.toSJISFunc);
     }
   }
 
@@ -2783,7 +2780,7 @@ var create = function create (data, options) {
 };
 
 var qrcode = {
-	create: create
+	create: create$2
 };
 
 var chunkstream = createCommonjsModule(function (module) {
@@ -4837,9 +4834,9 @@ exports.Inflate = Inflate;
 exports.createInflate = createInflate;
 exports.inflateSync = inflateSync;
 });
-var syncInflate_1 = syncInflate.Inflate;
-var syncInflate_2 = syncInflate.createInflate;
-var syncInflate_3 = syncInflate.inflateSync;
+syncInflate.Inflate;
+syncInflate.createInflate;
+syncInflate.inflateSync;
 
 var syncReader = createCommonjsModule(function (module) {
 
@@ -4917,11 +4914,11 @@ var filterParseSync = {
 	process: process_1
 };
 
-var hasSyncZlib = true;
+var hasSyncZlib$1 = true;
 
 
 if (!zlib.deflateSync) {
-  hasSyncZlib = false;
+  hasSyncZlib$1 = false;
 }
 
 
@@ -4932,7 +4929,7 @@ if (!zlib.deflateSync) {
 
 var parserSync = function(buffer, options) {
 
-  if (!hasSyncZlib) {
+  if (!hasSyncZlib$1) {
     throw new Error('To use the sync capability of this library in old node versions, please pin pngjs to v2.3.0');
   }
 
@@ -5021,17 +5018,17 @@ var parserSync = function(buffer, options) {
   return metaData;
 };
 
-var hasSyncZlib$1 = true;
+var hasSyncZlib = true;
 
 if (!zlib.deflateSync) {
-  hasSyncZlib$1 = false;
+  hasSyncZlib = false;
 }
 
 
 
 var packerSync = function(metaData, opt) {
 
-  if (!hasSyncZlib$1) {
+  if (!hasSyncZlib) {
     throw new Error('To use the sync capability of this library in old node versions, please pin pngjs to v2.3.0');
   }
 
@@ -5083,7 +5080,7 @@ var pngSync = {
 	write: write
 };
 
-var png = createCommonjsModule(function (module, exports) {
+var png$1 = createCommonjsModule(function (module, exports) {
 
 
 
@@ -5257,9 +5254,9 @@ PNG.prototype.adjustGamma = function() {
   PNG.adjustGamma(this);
 };
 });
-var png_1 = png.PNG;
+png$1.PNG;
 
-var utils$1 = createCommonjsModule(function (module, exports) {
+var utils = createCommonjsModule(function (module, exports) {
 function hex2rgba (hex) {
   if (typeof hex === 'number') {
     hex = hex.toString();
@@ -5358,25 +5355,25 @@ exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
   }
 };
 });
-var utils_1 = utils$1.getOptions;
-var utils_2 = utils$1.getScale;
-var utils_3 = utils$1.getImageWidth;
-var utils_4 = utils$1.qrToImageData;
+utils.getOptions;
+utils.getScale;
+utils.getImageWidth;
+utils.qrToImageData;
 
-var png$1 = createCommonjsModule(function (module, exports) {
-var PNG = png.PNG;
+var png = createCommonjsModule(function (module, exports) {
+var PNG = png$1.PNG;
 
 
 exports.render = function render (qrData, options) {
-  var opts = utils$1.getOptions(options);
+  var opts = utils.getOptions(options);
   var pngOpts = opts.rendererOpts;
-  var size = utils$1.getImageWidth(qrData.modules.size, opts);
+  var size = utils.getImageWidth(qrData.modules.size, opts);
 
   pngOpts.width = size;
   pngOpts.height = size;
 
   var pngImage = new PNG(pngOpts);
-  utils$1.qrToImageData(pngImage.data, qrData, opts);
+  utils.qrToImageData(pngImage.data, qrData, opts);
 
   return pngImage
 };
@@ -5435,11 +5432,11 @@ exports.renderToFileStream = function renderToFileStream (stream, qrData, option
   png.pack().pipe(stream);
 };
 });
-var png_1$1 = png$1.render;
-var png_2 = png$1.renderToDataURL;
-var png_3 = png$1.renderToBuffer;
-var png_4 = png$1.renderToFile;
-var png_5 = png$1.renderToFileStream;
+png.render;
+png.renderToDataURL;
+png.renderToBuffer;
+png.renderToFile;
+png.renderToFileStream;
 
 var utf8 = createCommonjsModule(function (module, exports) {
 var BLOCK_CHAR = {
@@ -5464,7 +5461,7 @@ function getBlockChar (top, bottom, blocks) {
 }
 
 exports.render = function (qrData, options, cb) {
-  var opts = utils$1.getOptions(options);
+  var opts = utils.getOptions(options);
   var blocks = BLOCK_CHAR;
   if (opts.color.dark.hex === '#ffffff' || opts.color.light.hex === '#000000') {
     blocks = INVERTED_BLOCK_CHAR;
@@ -5512,12 +5509,12 @@ exports.renderToFile = function renderToFile (path, qrData, options, cb) {
   fs$1.writeFile(path, utf8, cb);
 };
 });
-var utf8_1 = utf8.render;
-var utf8_2 = utf8.renderToFile;
+utf8.render;
+utf8.renderToFile;
 
 // var Utils = require('./utils')
 
-var render = function (qrData, options, cb) {
+var render$2 = function (qrData, options, cb) {
   var size = qrData.modules.size;
   var data = qrData.modules.data;
 
@@ -5566,7 +5563,7 @@ exports.renderToFile = function renderToFile (path, qrData, options, cb) {
 */
 
 var terminal = {
-	render: render
+	render: render$2
 };
 
 function getColorAttrib (color, attrib) {
@@ -5622,7 +5619,7 @@ function qrToPath (data, size, margin) {
 }
 
 var render$1 = function render (qrData, options, cb) {
-  var opts = utils$1.getOptions(options);
+  var opts = utils.getOptions(options);
   var size = qrData.modules.size;
   var data = qrData.modules.data;
   var qrcodesize = size + opts.margin * 2;
@@ -5672,8 +5669,8 @@ exports.renderToFile = function renderToFile (path, qrData, options, cb) {
   fs$1.writeFile(path, xmlStr, cb);
 };
 });
-var svg_1 = svg.render;
-var svg_2 = svg.renderToFile;
+svg.render;
+svg.renderToFile;
 
 var canvas = createCommonjsModule(function (module, exports) {
 function clearCanvas (ctx, canvas, size) {
@@ -5707,12 +5704,12 @@ exports.render = function render (qrData, canvas, options) {
     canvasEl = getCanvasElement();
   }
 
-  opts = utils$1.getOptions(opts);
-  var size = utils$1.getImageWidth(qrData.modules.size, opts);
+  opts = utils.getOptions(opts);
+  var size = utils.getImageWidth(qrData.modules.size, opts);
 
   var ctx = canvasEl.getContext('2d');
   var image = ctx.createImageData(size, size);
-  utils$1.qrToImageData(image.data, qrData, opts);
+  utils.qrToImageData(image.data, qrData, opts);
 
   clearCanvas(ctx, canvasEl, size);
   ctx.putImageData(image, 0, 0);
@@ -5738,8 +5735,8 @@ exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
   return canvasEl.toDataURL(type, rendererOpts.quality)
 };
 });
-var canvas_1 = canvas.render;
-var canvas_2 = canvas.renderToDataURL;
+canvas.render;
+canvas.renderToDataURL;
 
 function renderCanvas (renderFunc, canvas, text, opts, cb) {
   var args = [].slice.call(arguments, 1);
@@ -5803,19 +5800,19 @@ function renderCanvas (renderFunc, canvas, text, opts, cb) {
 }
 
 var create$1 = qrcode.create;
-var toCanvas = renderCanvas.bind(null, canvas.render);
-var toDataURL = renderCanvas.bind(null, canvas.renderToDataURL);
+var toCanvas$1 = renderCanvas.bind(null, canvas.render);
+var toDataURL$1 = renderCanvas.bind(null, canvas.renderToDataURL);
 
 // only svg for now.
-var toString_1 = renderCanvas.bind(null, function (data, _, opts) {
+var toString_1$1 = renderCanvas.bind(null, function (data, _, opts) {
   return svgTag.render(data, opts)
 });
 
 var browser = {
 	create: create$1,
-	toCanvas: toCanvas,
-	toDataURL: toDataURL,
-	toString: toString_1
+	toCanvas: toCanvas$1,
+	toDataURL: toDataURL$1,
+	toString: toString_1$1
 };
 
 function checkParams (text, opts, cb) {
@@ -5859,7 +5856,7 @@ function getRendererFromType (type) {
     case 'png':
     case 'image/png':
     default:
-      return png$1
+      return png
   }
 }
 
@@ -5877,7 +5874,7 @@ function getStringRendererFromType (type) {
   }
 }
 
-function render$2 (renderFunc, text, params) {
+function render (renderFunc, text, params) {
   if (!params.cb) {
     return new Promise(function (resolve, reject) {
       try {
@@ -5899,26 +5896,26 @@ function render$2 (renderFunc, text, params) {
   }
 }
 
-var create$2 = qrcode.create;
+var create = qrcode.create;
 
-var toCanvas$1 = browser.toCanvas;
+var toCanvas = browser.toCanvas;
 
-var toString_1$1 = function toString (text, opts, cb) {
+var toString_1 = function toString (text, opts, cb) {
   var params = checkParams(text, opts, cb);
   var renderer = getStringRendererFromType(params.opts.type);
-  return render$2(renderer.render, text, params)
+  return render(renderer.render, text, params)
 };
 
-var toDataURL$1 = function toDataURL (text, opts, cb) {
+var toDataURL = function toDataURL (text, opts, cb) {
   var params = checkParams(text, opts, cb);
   var renderer = getRendererFromType(params.opts.type);
-  return render$2(renderer.renderToDataURL, text, params)
+  return render(renderer.renderToDataURL, text, params)
 };
 
 var toBuffer = function toBuffer (text, opts, cb) {
   var params = checkParams(text, opts, cb);
   var renderer = getRendererFromType(params.opts.type);
-  return render$2(renderer.renderToBuffer, text, params)
+  return render(renderer.renderToBuffer, text, params)
 };
 
 var toFile = function toFile (path, text, opts, cb) {
@@ -5935,7 +5932,7 @@ var toFile = function toFile (path, text, opts, cb) {
   var renderer = getRendererFromType(type);
   var renderToFile = renderer.renderToFile.bind(null, path);
 
-  return render$2(renderToFile, text, params)
+  return render(renderToFile, text, params)
 };
 
 var toFileStream = function toFileStream (stream, text, opts) {
@@ -5946,14 +5943,14 @@ var toFileStream = function toFileStream (stream, text, opts) {
   var params = checkParams(text, opts, stream.emit.bind(stream, 'error'));
   var renderer = getRendererFromType('png'); // Only png support for now
   var renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-  render$2(renderToFileStream, text, params);
+  render(renderToFileStream, text, params);
 };
 
 var server = {
-	create: create$2,
-	toCanvas: toCanvas$1,
-	toString: toString_1$1,
-	toDataURL: toDataURL$1,
+	create: create,
+	toCanvas: toCanvas,
+	toString: toString_1,
+	toDataURL: toDataURL,
 	toBuffer: toBuffer,
 	toFile: toFile,
 	toFileStream: toFileStream

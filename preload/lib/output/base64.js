@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -10,7 +8,7 @@ function createCommonjsModule(fn, module) {
 
 var base64 = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
-     module.exports = factory(global)
+    module.exports = factory(global)
         ;
 }((
     typeof self !== 'undefined' ? self
@@ -24,7 +22,7 @@ var base64 = createCommonjsModule(function (module, exports) {
     var version = "2.5.2";
     // if node.js and NOT React Native, we use Buffer
     var buffer;
-    if ( module.exports) {
+    if (module.exports) {
         try {
             buffer = eval("require('buffer').Buffer");
         } catch (err) {
@@ -211,7 +209,7 @@ var base64 = createCommonjsModule(function (module, exports) {
     }
     // module.exports and AMD are mutually exclusive.
     // module.exports has precedence.
-    if ( module.exports) {
+    if (module.exports) {
         module.exports.Base64 = global.Base64;
     }
     // that's it!
