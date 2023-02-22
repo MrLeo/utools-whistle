@@ -11,6 +11,10 @@ export default {
     window.utools.onPluginEnter(async ({ code, type, payload }) => {
       console.log('用户进入插件', { code, type, payload })
       switch (code) {
+        case 'whistle':
+          this.$router.push({ path: `/` })
+          break
+
         case 'network':
           open(process.env.VUE_APP_WHISTLE_API + '#network')
           window.utools.outPlugin()

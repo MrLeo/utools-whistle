@@ -8,8 +8,8 @@
   "preload": "preload/main.js",
   "features": [
     {
-      "code": "rules",
-      "explain": "whistle 规则管理",
+      "code": "whistle",
+      "explain": "whistle 控制面板",
       "icon": "rocket.png",
       "cmds": ["w2", "whistle"]
     },
