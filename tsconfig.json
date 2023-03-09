@@ -1,17 +1,31 @@
 {
   "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
     "outDir": "dist",
-    "sourceMap": false,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "ES2018",
+    "pretty": true,
+    "checkJs": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
+    "strictFunctionTypes": false,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "types": [
-      // utools api
-      "utools-helper/@types/utools",
-      // electron api
-      "utools-helper/@types/electron",
-      "@types/node"
-    ]
-  }
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "types/*": ["types/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
+  "exclude": ["**/*.js", "tests/**/*", "node_modules", "dist", ".git"]
 }
