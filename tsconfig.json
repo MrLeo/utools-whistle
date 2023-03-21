@@ -27,5 +27,5 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "exclude": ["**/*.js", "tests/**/*", "node_modules", "dist", ".git"]
+  "exclude": ["**/*.js", "**/*.cjs", "**/*.mjs", "tests/**/*", "node_modules", "dist", ".git"]
 }
